@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, user-scalable=no" />
+  <title>VUMP IT</title>
+  <style>
+    /* Base reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 1024px;
+      height: 600px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+      position: relative;
+      background-image: url('assets/background.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+    }
+
+    /* Logo */
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 30px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 10;
+    }
+
+    .logo img {
+      width: 191px;
+      height: 91px;
+    }
+
+    /* Page Title */
+    .page-title {
+      position: absolute;
+      top: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: 900;
+      font-size: 32px;
+      letter-spacing: 1.2px;
+      z-index: 5;
+      user-select: none;
+      white-space: nowrap; /* Prevent line break */
+    }
+
+    /* Container for video and buttons */
+    .instruction-container {
+      position: absolute;
+      top: 180px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 940px;
+      height: 370px;
+      background: rgba(255, 255, 255, 0.12); /* translucent */
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      padding: 0 40px;
+      box-sizing: border-box;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    /* Video wrapper */
+    .video-wrapper {
+      flex: 1;
+      max-width: 580px;
+      margin-right: 50px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.35);
+    }
+
+    /* Video element */
+    video {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      cursor: pointer;
+      background: black;
+    }
+
+    /* Buttons container */
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      width: 240px;
+    }
+
+    /* Buttons base style (adapted from back-btn) */
+    .btn {
+      padding: 14px 0;
+      font-weight: 700;
+      font-size: 24px;
+      border-radius: 28px;
+      border: none;
+      cursor: pointer;
+      color: white;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+      background: linear-gradient(to bottom right, #f37a53, #f15a29);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+
+    /* Button hover and active states */
+    .btn:hover,
+    .btn:focus {
+      box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+      transform: translateY(-2px);
+      outline: none;
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+    }
+
+    /* Individual button widths - full width of container */
+    .mute-btn,
+    .skip-btn {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Logo (do not change) -->
+  <div class="logo">
+    <img src="assets/logo.png" alt="Logo" />
+  </div>
+
+  <!-- Main title -->
+  <h1 class="page-title">VERTICAL JUMP TUTORIAL</h1>
+
+  <!-- Container for video and buttons -->
+  <div class="instruction-container">
+    <div class="video-wrapper">
+      <video controls preload="metadata" poster="assets/video-poster.png" width="560" height="315">
+        <source src="assets/jumptutorial.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="button-group">
+      <!-- Removed Full-Screen Button -->
+      <button class="btn playpause-btn" type="button">PLAY</button>
+      <button class="btn skip-btn" type="button">BACK</button>
+    </div>
+  </div>
+
+  <script>
+    const video = document.querySelector('video');
+
+    const playPauseBtn = document.querySelector('.playpause-btn');
+    // Set initial button text depending on video state
+    playPauseBtn.textContent = video.paused ? 'PLAY' : 'PAUSE';
+
+    playPauseBtn.addEventListener('click', () => {
+      if (video.paused) {
+        video.play();
+        playPauseBtn.textContent = 'PAUSE';
+      } else {
+        video.pause();
+        playPauseBtn.textContent = 'PLAY';
+      }
+    });
+
+    document.querySelector('.skip-btn').addEventListener('click', () => {
+      window.location.href = 'userprofile.html'; // adjust destination as needed
+    });
+  </script>
+
+</body>
+</html>

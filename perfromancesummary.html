@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, user-scalable=no" />
+  <title>VUMP IT</title>
+  <style>
+    /* Base reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    html, body {
+      width: 1024px;
+      height: 600px;
+      overflow: hidden;
+      position: relative;
+      background-image: url('assets/background.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Logo */
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 30px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 3;
+    }
+
+    .logo img {
+      width: 191px;
+      height: 91px;
+    }
+
+    /* Menu Icon */
+    .menu-icon {
+      position: absolute;
+      top: 35px;
+      right: 30px;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .menu-icon div {
+      width: 35px;
+      height: 6px;
+      background-color: white;
+      margin: 6px 0;
+      border-radius: 100px;
+    }
+
+    .menu-icon.active div {
+      background-color: #ffffff6c;
+    }
+
+    /* Menu Popup */
+    .menu-popup {
+      position: absolute;
+      top: 80px;
+      right: 40px;
+      background-color: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 5;
+      transition: opacity 0.3s ease;
+    }
+
+    .menu-popup.hidden {
+      display: none;
+    }
+
+    /* Popup Button with Icon */
+    .popup-btn {
+      background-color: #f15a29;
+      color: white;
+      border: none;
+      padding: 12px 24px 12px 18px;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .popup-btn:hover {
+      background-color: #e04a1f;
+    }
+
+    .popup-btn .btn-icon {
+      width: 27px;
+      height: 24px;
+      filter: brightness(0) invert(1); /* makes black icons appear white */
+    }
+
+    /* Profile Tab */
+    .profile-tab {
+      position: absolute;
+      top: 125px;
+      left: 0;
+      background-color: white;
+      padding: 5px 50px 5px 60px;
+      border-top-right-radius: 40px;
+      border-bottom-right-radius: 40px;
+      font-size: 28px;
+      font-weight: 800;
+      color: #005b79;
+      z-index: 4;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Back button */
+    .back-btn {
+      position: absolute;
+      bottom: 20px;
+      left: 510px;
+      padding: 10px 40px;
+      transform: translateX(-50%);
+      background: linear-gradient(to bottom right, #f37a53, #f15a29);
+      color: white;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      font-weight: bold;
+      font-size: 20px;
+      border-radius: 28px;
+      text-decoration: none;
+      z-index: 4;
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- Logo -->
+<div class="logo">
+  <img src="assets/logo.png" alt="Logo" />
+</div>
+
+<!-- Popup Menu -->
+<div id="menu-popup" class="menu-popup hidden">
+  <button class="popup-btn">
+    <img src="assets/adminicon.png" class="btn-icon" alt="Admin Icon" />
+    System Admin
+  </button>
+  <button class="popup-btn">
+    <img src="assets/aboutusicon.png" class="btn-icon" alt="About Icon" />
+    About Us
+  </button>
+</div>
+
+<!-- Menu Icon -->
+<div class="menu-icon">
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+
+<!-- Profile Tab -->
+<div class="profile-tab">
+  <span>PERFORMANCE SUMMARY</span>
+</div>
+
+<script>
+  const menuIcon = document.querySelector('.menu-icon');
+  const menuPopup = document.querySelector('#menu-popup');
+
+  menuIcon.addEventListener('click', (e) => {
+    e.stopPropagation();
+    menuIcon.classList.toggle('active');
+    menuPopup.classList.toggle('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!menuPopup.contains(e.target) && !menuIcon.contains(e.target)) {
+      menuPopup.classList.add('hidden');
+      menuIcon.classList.remove('active');
+    }
+  });
+</script>
+
+<!-- Back Button -->
+<a href="userprofile.html" class="back-btn" id="back-btn-label">BACK</a>
+
+</body>
+</html>

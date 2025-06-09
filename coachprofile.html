@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, user-scalable=no" />
+  <title>VUMP IT</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* Base reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 1024px;
+      height: 600px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+      position: relative;
+      background-image: url("BACKGROUND.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+    }
+
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 30px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 3;
+    }
+
+    .logo img {
+      width: 191px;
+      height: 91px;
+    }
+
+    /* Edit Button */
+    .edit-btn {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      z-index: 3;
+      background-color: rgb(228, 77, 6);
+      border: 2px solid rgb(183, 61, 5);
+      padding: 5px 16px;
+      color: rgb(255, 255, 255);
+      font-weight: bold;
+      font-size: 20px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.2s ease;
+    }
+
+    .edit-btn:hover {
+      background-color: rgba(163, 80, 1, 0.837);
+    }
+
+    /* Back Button (Lower Left) */
+    .visible-back {
+      position: absolute;
+      bottom: 20px;
+      left: 30px;
+      z-index: 10;
+    }
+
+    .back-btn {
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 28px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .back-btn:hover {
+      background-color: #256227;
+    }
+
+    /* Coach Info Section */
+    .coach-info {
+      position: absolute;
+      top: 140px; /* Centered the profile box */
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 20px 28px;
+      border-radius: 12px;
+      width: 500px;
+      line-height: 1.7;
+      font-size: 15px;
+      z-index: 1;
+      background: #2e7d32; /* Slight dark background for readability */
+      backdrop-filter: blur(10px);
+      border: 2px solid white;
+    }
+
+    .coach-name-role {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+
+    .coach-info h1 {
+      font-size: 40px;
+      font-weight: 700;
+      margin-top: 0px;
+      cursor: pointer;
+    }
+
+    .coach-info h3 {
+      font-size: 30px;
+      font-weight: 500;
+      color: white;
+      margin-top: -1px;
+      margin-bottom: -10px;
+      cursor: pointer;
+    }
+
+    .coach-info hr {
+      border: none;
+      height: 2px;
+      background-color: white;
+      margin-bottom: 10px;
+    }
+
+    .coach-info p {
+      display: flex;
+      margin: 3px 10px;
+    }
+
+    .coach-info p span:first-child {
+      font-weight: 400;
+      color: white;
+      min-width: 150px;
+      font-size: 18px;
+    }
+
+    .coach-info p span:last-child {
+      font-weight: 700;
+      color: white;
+      font-size: 17px;
+      cursor: pointer;
+    }
+
+    /* Additional Info */
+    .coach-info .additional-info {
+      margin-top: 20px;
+    }
+
+    .coach-info .additional-info p {
+      margin-left: 70px;
+    }
+
+    /* Style for dropdown */
+    select {
+      background-color: transparent;
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+      border: 1px solid white;
+      border-radius: 4px;
+      padding: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Logo -->
+<div class="logo">
+  <img src="assets/logo.png" alt="Logo" />
+</div>
+
+<!-- Edit Button (Upper Right) -->
+<button class="edit-btn" onclick="window.location.href='edit-coach.html'">Edit</button>
+
+<!-- Back Button (Lower Left) -->
+<div class="visible-back">
+  <button class="back-btn" onclick="window.location.href='admin_main.html'">← Back</button>
+</div>
+
+<!-- Coach Info Section -->
+<div class="coach-info">
+  <div class="coach-name-role">
+    <h1 id="coach-name">Juan Dela Cruz</h1>
+    <h3>Coach</h3>
+  </div>
+  <hr />
+  <p><span>User ID:</span> <span id="user-id">C2023001</span></p>
+  <p><span>Sport:</span> <span id="sport">Basketball</span></p>
+  <p><span>College:</span> <span id="coach-college">Physical Education</span></p>
+  <p><span>List of Classes:</span> 
+      <select id="class-list" style="color: rgb(255, 255, 255); background-color: rgb(0, 123, 0);">
+        <option value="Basketball 101">Physical Conditioning</option>
+        <option value="Physical Conditioning">Physical Conditioning</option>
+        <option value="Football Training">Football Training</option>
+        <option value="Tennis Fundamentals">Tennis Fundamentals</option>
+      </select>
+    </p>
+    <p><span>Total Students:</span> <span id="total-all-students">40</span></p>
+    <p><span>Total Athletes:</span> <span id="total-athletes">25</span></p>  
+</div>
+
+<script>
+  const coachData = {
+    name: "Juan Dela Cruz",
+    userId: "C2023001",
+    sport: "Basketball",
+    college: "Physical Education",
+    classList: "Basketball 101, Physical Conditioning",
+    totalStudents: 40,
+    totalAthletes: 25,
+    totalAll: 65
+  };
+
+  // Display initial data
+  document.getElementById("coach-name").textContent = coachData.name;
+  document.getElementById("user-id").textContent = coachData.userId;
+  document.getElementById("sport").textContent = coachData.sport;
+  document.getElementById("college").textContent = coachData.college;
+  document.getElementById("total-all-students").textContent = coachData.totalStudents;
+  document.getElementById("total-athletes").textContent = coachData.totalAthletes;
+</script>
+
+</body>
+</html>

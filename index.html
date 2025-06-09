@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, user-scalable=no" />
+  <title>VUMP IT</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 1024px;
+      height: 600px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Fullscreen background video (fixed size) */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 1024px;
+      height: 600px;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    /* Overlay for dark contrast */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 1024px;
+      height: 600px;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    /* Wrapper for all UI elements */
+    .content {
+      width: 1024px;
+      height: 600px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 30px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 3;
+    }
+
+    .logo img {
+      width: 191px;
+      height: 91px;
+    }
+
+    /* Button positions */
+    #system-admin-btn {
+      position: absolute;
+      bottom: 50px;
+      left: 45px;
+      z-index: 10;
+      background: none;
+      padding: 5px;
+      border: none;
+    }
+
+    #about-us-btn {
+      position: fixed;
+      top: 40px;
+      right: 40px;
+      z-index: 10;
+      background: none;
+      padding: 5px;
+      border: none;
+    }
+
+    .popup-btn .btn-icon {
+      width: 30px;
+      height: 30px;
+    }
+
+    /* Main container layout */
+    .container {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* Left content */
+    .left {
+      width: 620px;
+    }
+
+    h1 {
+      font-size: 38px;
+      margin-bottom: 30px;
+      margin-left: 8px;
+      margin-top: -30px;
+    }
+
+    .line {
+      width: 50px;
+      height: 2px;
+      background-color: white;
+      margin-bottom: 20px;
+      margin-left: 10px;
+    }
+
+    .description {
+      font-size: 16px;
+      line-height: 1.5;
+      text-align: justify;
+      margin-right: 40px;
+      margin-left: 10px;
+    }
+
+    /* Right RFID box */
+    .right {
+      width: 340px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .rfid-box {
+      background-color: rgba(255, 255, 255, 0.15);
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      width: 400px;
+      height: 230px;
+      margin-left: 10px;
+      margin-top: 50px;
+    }
+
+    .rfid-box h2 {
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: -20px;
+    }
+
+    .rfid-box small {
+      display: block;
+      margin-bottom: -5px;
+      font-size: 14px;
+    }
+
+    .rfid-box img {
+      width: 200px;
+      height: auto;
+    }
+
+    /* Passcode Popup Overlay */
+    #passcode-popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    /* Passcode Popup Container */
+    #passcode-popup {
+      background: rgba(255 255 255 / 0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 25px;
+      padding: 30px 40px 40px;
+      width: 350px;
+      box-sizing: border-box;
+      position: relative;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: none;
+    }
+
+    /* Title */
+    #passcode-popup h2 {
+      text-align: center;
+      font-weight: 700;
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+
+    /* Close Button */
+    #passcode-popup .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 30px;
+      font-weight: 900;
+      color: white;
+      cursor: pointer;
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* Passcode Circles Container */
+    #passcode-circles {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 30px;
+      user-select: none;
+    }
+
+    /* Each Circle */
+    .circle {
+      width: 20px;
+      height: 20px;
+      border: 2.5px solid white;
+      border-radius: 50%;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      user-select: none;
+    }
+
+    /* Filled circle dot */
+    .circle.filled::before {
+      content: '●';
+      font-size: 45px;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    /* Number pad grid */
+    #num-pad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px 30px;
+      justify-items: center;
+      user-select: none;
+    }
+
+    /* Each number button */
+    .num-btn {
+      width: 64px;
+      height: 64px;
+      border: 1px solid rgba(255, 255, 255, 0.263);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.436);
+      color: white;
+      font-size: 28px;
+      font-weight: 200;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      user-select: none;
+      transition: background-color 0.15s ease, transform 0.1s ease;
+    }
+    .num-btn:hover {
+      background-color: rgba(255 255 255 / 0.35);
+      transform: scale(1.1);
+    }
+    .num-btn:active {
+      background-color: rgba(255, 255, 255, 0.633);
+      transform: scale(0.95);
+    }
+
+    /* Hover (shake) animation for error */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+    .shake {
+      animation: shake 0.4s ease;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Background Video -->
+<video autoplay muted loop id="bg-video">
+  <source src="assets/backroundindexx.mp4" type="video/mp4" />
+  Your browser does not support HTML5 video.
+</video>
+
+<!-- Dark overlay -->
+<div class="overlay"></div>
+
+<!-- Main Content -->
+<div class="content">
+  <div class="container">
+    <div class="left">
+      <div class="logo">
+        <img src="assets/logo.png" alt="Logo" />
+      </div>
+      <h1>Welcome!</h1>
+      <div class="line"></div>
+      <p class="description">
+        The ultimate high-tech sports measurement system designed to track and analyze your vertical jump performance. Built with precision and innovation, VUMPIT combines Vertical Momentum, Performance, Intensity, and Training to give athletes real-time insights into their explosive power. It empowers users to make data-driven decisions for training improvement and long-term performance optimization.
+      </p>
+    </div>
+
+    <div class="right">
+      <div class="rfid-box">
+        <h2>TAP RFID</h2>
+        <small>above</small>
+        <img src="assets/rfid-icon.png" alt="RFID Icon" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- System Admin Button (Bottom Left Corner) -->
+<button id="system-admin-btn" class="popup-btn">
+  <img src="assets/adminicon.png" class="btn-icon" alt="Admin Icon" />
+</button>
+
+<!-- About Us Button (Top Right Corner) -->
+<button id="about-us-btn" class="popup-btn" onclick="window.location.href='aboutus.html'">
+  <img src="assets/aboutusicon.png" class="btn-icon" alt="About Icon" />
+</button>
+
+<!-- Passcode Popup -->
+<div id="passcode-popup-overlay" style="display:none;">
+  <div id="passcode-popup" role="dialog" aria-modal="true" aria-labelledby="passcode-title">
+    <div class="close-btn" id="passcode-close-btn" aria-label="Close passcode entry">&times;</div>
+    <h2 id="passcode-title">Enter Passcode</h2>
+    <div id="passcode-circles" aria-live="polite" aria-atomic="true" aria-relevant="additions">
+      <div class="circle" data-index="0"></div>
+      <div class="circle" data-index="1"></div>
+      <div class="circle" data-index="2"></div>
+      <div class="circle" data-index="3"></div>
+      <div class="circle" data-index="4"></div>
+    </div>
+    <div id="num-pad" role="list">
+      <button type="button" class="num-btn" data-num="1" aria-label="Number 1">1</button>
+      <button type="button" class="num-btn" data-num="2" aria-label="Number 2">2</button>
+      <button type="button" class="num-btn" data-num="3" aria-label="Number 3">3</button>
+      <button type="button" class="num-btn" data-num="4" aria-label="Number 4">4</button>
+      <button type="button" class="num-btn" data-num="5" aria-label="Number 5">5</button>
+      <button type="button" class="num-btn" data-num="6" aria-label="Number 6">6</button>
+      <button type="button" class="num-btn" data-num="7" aria-label="Number 7">7</button>
+      <button type="button" class="num-btn" data-num="8" aria-label="Number 8">8</button>
+      <button type="button" class="num-btn" data-num="9" aria-label="Number 9">9</button>
+      <div></div> <!-- empty grid cell -->
+      <button type="button" class="num-btn" data-num="0" aria-label="Number 0">0</button>
+      <div></div> <!-- empty grid cell -->
+    </div>
+  </div>
+</div>
+
+<script>
+  // Passcode popup logic
+  const adminBtn = document.getElementById('system-admin-btn');
+  const passcodeOverlay = document.getElementById('passcode-popup-overlay');
+  const passcodeCloseBtn = document.getElementById('passcode-close-btn');
+  const passcodeCircles = document.querySelectorAll('#passcode-circles .circle');
+  const numPad = document.getElementById('num-pad');
+
+  // The correct passcode (example: "12345") - change as needed
+  const CORRECT_PASSCODE = '58585';
+
+  let enteredPasscode = '';
+
+  // Show passcode popup when admin clicked
+  adminBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    enteredPasscode = '';
+    updateCircles();
+    passcodeOverlay.style.display = 'flex';
+  });
+
+  // Close popup function
+  function closePasscodePopup() {
+    enteredPasscode = '';
+    updateCircles();
+    passcodeOverlay.style.display = 'none';
+  }
+  passcodeCloseBtn.addEventListener('click', closePasscodePopup);
+
+  // Update circle filling
+  function updateCircles() {
+    passcodeCircles.forEach((circle, idx) => {
+      if (idx < enteredPasscode.length) {
+        circle.classList.add('filled');
+      } else {
+        circle.classList.remove('filled');
+      }
+    });
+  }
+
+  // Shake animation for error
+  function shakeCircles() {
+    const container = document.getElementById('passcode-circles');
+    container.classList.add('shake');
+    setTimeout(() => container.classList.remove('shake'), 400);
+  }
+
+  // Handle number button click
+  numPad.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('num-btn')) return;
+    if (enteredPasscode.length >= 5) return; // max 5 digits
+
+    enteredPasscode += e.target.dataset.num;
+    updateCircles();
+
+    if (enteredPasscode.length === 5) {
+      if (enteredPasscode === CORRECT_PASSCODE) {
+        // correct passcode - redirect to admin_main.html
+        window.location.href = 'admin_main.html';
+      } else {
+        // wrong passcode - reset input and shake
+        enteredPasscode = '';
+        updateCircles();
+        shakeCircles();
+      }
+    }
+  });
+
+  // Optional: allow closing popup on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && passcodeOverlay.style.display === 'flex') {
+      closePasscodePopup();
+    }
+  });
+</script>
+
+</body>
+</html>

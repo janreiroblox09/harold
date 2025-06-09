@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, user-scalable=no" />
+  <title>VUMP IT</title>
+  <style>
+    /* Base reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 1024px;
+      height: 600px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+      position: relative;
+      background-image: url('assets/background.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+    }
+
+    /* Logo */
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 30px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 3;
+    }
+
+    .logo img {
+      width: 191px;
+      height: 91px;
+    }
+
+    /* Download PDF Button */
+    .download-pdf-btn {
+      position: absolute;
+      top: 35px;
+      right: 30px;
+      background-color: #1e9504;
+      color: white;
+      border: 1.5px solid white;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 3px 6px rgba(13, 177, 73, 0.5);
+      transition: background-color 0.3s ease;
+      z-index: 10;
+      user-select: none;
+    }
+
+    .download-pdf-btn:hover {
+      background-color: #009634;
+    }
+
+    /* Profile Tab */
+    .profile-tab {
+      position: absolute;
+      top: 125px;
+      left: 0;
+      background-color: white;
+      padding: 5px 50px 5px 60px;
+      border-top-right-radius: 40px;
+      border-bottom-right-radius: 40px;
+      font-size: 28px;
+      font-weight: 800;
+      color: #005b79;
+      z-index: 4;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Recommendation Box */
+    .recommendation-box h3 {
+      margin-top: 20px;
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    .recommendation-box ul {
+      margin-left: 20px;
+      list-style-type: disc;
+    }
+
+    /* Back Button */
+    .back-button {
+      position: absolute;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(to bottom right, #f37a53, #f15a29);
+      color: white;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      font-weight: bold;
+      font-size: 20px;
+      padding: 10px 37px;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      z-index: 4;
+    }
+
+    .back-button:hover {
+      background-color: #e04a1f;
+    }
+
+    /* Recommendation Box */
+    .recommendation-box {
+      position: absolute;
+      top: 190px;
+      left: 25px;
+      width: 980px;
+      height: 320px;
+      background-color: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(6px);
+      border-radius: 0;
+      padding: 20px;
+      overflow-y: auto;
+      font-size: 16px;
+      line-height: 1.5;
+      color: white;
+      z-index: 3;
+      scrollbar-gutter: stable both-edges;
+    }
+
+    /* Custom scrollbar inside the box border */
+    .recommendation-box::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .recommendation-box::-webkit-scrollbar-track {
+      background: transparent;
+      border-radius: 0;
+    }
+
+    .recommendation-box::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 0;
+    }
+
+    .recommendation-box::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Logo -->
+  <div class="logo">
+    <img src="assets/logo.png" alt="Logo" />
+  </div>
+
+  <!-- Download PDF Button -->
+  <button
+    id="downloadPdfBtn"
+    title="Download Recommendations PDF"
+    aria-label="Download Recommendations PDF"
+    class="download-pdf-btn"
+  >
+    📄 Download PDF
+  </button>
+
+  <!-- Profile Tab -->
+  <div class="profile-tab">
+    <span id="profileTabTitle">RECOMMENDATIONS</span>
+  </div>
+
+  <!-- Recommendation Content -->
+  <div class="recommendation-box">
+    <div class="recommendation-content">
+      <h3><span id="bmiFocusTitle">BMI Focus</span></h3>
+      <ul>
+        <li><span id="bmiItem1">Maintain a BMI between 18.5 and 24.9 for optimal health.</span></li>
+        <li><span id="bmiItem2">Focus on balanced diet and regular physical activity to manage BMI.</span></li>
+        <li><span id="bmiItem3">Consult with a healthcare provider if BMI is above or below recommended range.</span></li>
+      </ul>
+
+      <h3><span id="exerciseTitle">Exercise and Lifestyle</span></h3>
+      <ul>
+        <li><span id="exerciseItem1">Incorporate both aerobic and strength training exercises.</span></li>
+        <li><span id="exerciseItem2">Aim for at least 150 minutes of moderate-intensity exercise per week.</span></li>
+      </ul>
+
+      <h3><span id="nutritionTitle">Nutrition and Diet</span></h3>
+      <ul>
+        <li><span id="nutritionItem1">Follow a calorie-controlled, nutrient-rich diet.</span></li>
+        <li><span id="nutritionItem2">Focus on vegetables, whole grains, lean proteins, and healthy fats.</span></li>
+      </ul>
+
+      <h3><span id="remarksTitle">VUMPIT's Remarks</span></h3>
+      <ul>
+        <li><span id="remarksText">Ensure consistent monitoring of BMI and adjust your lifestyle accordingly.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <a href="jumpheightstatisticshistory.html" class="back-button"><span id="backButtonText">BACK</span></a>
+
+  <!-- Optional Dynamic JS Example -->
+  <script>
+    const recommendationData = {
+      profileTabTitle: "RECOMMENDATIONS",
+      bmiItem1: "Maintain a BMI between 18.5 and 24.9 for optimal health.",
+      bmiItem2: "Focus on balanced diet and regular physical activity to manage BMI.",
+      bmiItem3: "Consult with a healthcare provider if BMI is above or below recommended range.",
+      exerciseItem1: "Incorporate both aerobic and strength training exercises.",
+      exerciseItem2: "Aim for at least 150 minutes of moderate-intensity exercise per week.",
+      nutritionItem1: "Follow a calorie-controlled, nutrient-rich diet.",
+      nutritionItem2: "Focus on vegetables, whole grains, lean proteins, and healthy fats.",
+      remarksText: "Ensure consistent monitoring of BMI and adjust your lifestyle accordingly.",
+      bmiFocusTitle: "BMI Focus",
+      exerciseTitle: "Exercise and Lifestyle",
+      nutritionTitle: "Nutrition and Diet",
+      remarksTitle: "VUMPIT's Remarks",
+      backButtonText: "BACK"
+    };
+
+    for (const key in recommendationData) {
+      const element = document.getElementById(key);
+      if (element) {
+        element.textContent = recommendationData[key];
+      }
+    }
+  </script>
+
+  <!-- Download PDF Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    document.getElementById('downloadPdfBtn').addEventListener('click', () => {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const now = new Date();
+      const formattedDate = now.toLocaleDateString();
+      const formattedTime = now.toLocaleTimeString();
+
+      // Title and timestamp
+      doc.setFontSize(18);
+      doc.text("VUMP IT BMI Recommendations", 14, 20);
+      doc.setFontSize(11);
+      doc.text(`Downloaded on: ${formattedDate} ${formattedTime}`, 14, 30);
+
+      // Get recommendation content
+      const recContent = document.querySelector('.recommendation-content');
+      const lines = [];
+
+      // Extract each heading and list item text
+      recContent.querySelectorAll('h3').forEach((h3) => {
+        lines.push(h3.innerText);
+        const ul = h3.nextElementSibling;
+        if (ul && ul.tagName.toLowerCase() === 'ul') {
+          ul.querySelectorAll('li span').forEach(liSpan => {
+            lines.push(' - ' + liSpan.innerText);
+          });
+        }
+        lines.push(''); // blank line for spacing
+      });
+
+      // Add content lines to PDF (simple wrapping)
+      doc.setFontSize(12);
+      let y = 40;
+      lines.forEach(line => {
+        if (y > 270) { // new page if overflow
+          doc.addPage();
+          y = 20;
+        }
+        doc.text(line, 14, y);
+        y += 8;
+      });
+
+      // Save PDF
+      doc.save(`VUMPIT_BMI_Recommendations_${formattedDate.replace(/\//g, '-')}.pdf`);
+    });
+  </script>
+
+</body>
+</html>

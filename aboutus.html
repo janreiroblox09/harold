@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, user-scalable=no" />
+  <title>VUMP IT - About the Creators</title>
+  <style>
+    /* Base reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 1024px;
+      height: 600px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Fullscreen background video (fixed size) */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 1024px;
+      height: 600px;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    /* Overlay for dark contrast */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 1024px;
+      height: 600px;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    /* Wrapper for all UI elements */
+    .content {
+      width: 1024px;
+      height: 600px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Logo */
+    .logo {
+      position: relative;
+      top: 10px;
+      left: 30px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 1;
+    }
+
+    .logo img {
+      width: 191px;
+      height: 91px;
+    }
+
+    /* Creators Section */
+    .creators-section {
+      position: relative;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      text-align: center;
+      color: white;
+      z-index: 1;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .creators-section h1 {
+      font-size: 42px;
+      margin-bottom: 40px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+      font-weight: 900;
+    }
+
+    /* Educational Details */
+    .education-info {
+      font-size: 18px;
+      margin-bottom: 30px;
+      font-weight: 700;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+      margin-top: -20px;
+    }
+
+    .creators-list {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 40px;
+      background: rgba(149, 146, 146, 0.282);
+      border-radius: 12px;
+      padding: 20px 30px;
+      max-width: 1000px;
+      max-height: 700px;
+      font-size: 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      gap: 60px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: -10px;
+    }
+
+    .creator-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 180px; /* Reduced image size */
+    }
+
+    .creator-card img {
+      width: 150px; /* Reduced image size */
+      height: 150px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+      margin-bottom: 12px;
+      border: 3px solid #2d2e2d56;
+    }
+
+    .creator-name {
+      font-size: 20px;
+      font-weight: 700;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+    }
+
+  
+    .creator-role {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    /* Back Button */
+    .back-btn {
+      position: absolute;
+      bottom: 50px;
+      left: 510px;
+      padding: 5px 40px;
+      transform: translateX(-50%);
+      background: linear-gradient(to bottom right, #aeaaaa, #3e3e3d);
+      color: rgb(255, 255, 255);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      font-weight: bold;
+      font-size: 30px;
+      border-radius:25px;
+      text-decoration: none;
+      z-index: 4;
+      border: 2px solid rgb(48, 48, 48);
+    }
+
+    .back-btn:hover,
+    .back-btn:focus {
+      transform: translateX(-50%) scale(1.05);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Video -->
+  <video autoplay muted loop id="bg-video">
+    <source src="assets/backgroundaboutus.mp4" type="video/mp4" />
+    Your browser does not support HTML5 video.
+  </video>
+
+  <!-- Creators Section -->
+  <section class="creators-section">
+    <h1>ABOUT US</h1>
+
+    <div class="education-info">
+      Bachelor of Science in Computer Engineering<br />
+      Batch 2024-2025
+    </div>
+
+    <div class="creators-list">
+      <div class="creator-card">
+        <img src="assets/ayla.jpg" alt="Ayla Jean Z. Abrea" />
+        <p class="creator-name">Ayla Jean Z. Abrea</p>
+        <p class="creator-role">Developer</p>
+      </div>
+      <div class="creator-card">
+        <img src="assets/harold.png" alt="Harold R. Cruz" />
+        <p class="creator-name">Harold R. Cruz</p>
+        <p class="creator-role">Developer</p>
+      </div>
+      <div class="creator-card">
+        <img src="assets/trina.jpg" alt="Ma. Trina Arabella A. Salumbides" />
+        <p class="creator-name" >Ma. Trina Arabella A. Salumbides</p>
+        <p class="creator-role">Developer</p>
+      </div>
+    </div>
+  </section>
+
+  <a href="index.html" class="back-btn" id="back-btn-label">BACK</a>
+
+</body>
+</html>

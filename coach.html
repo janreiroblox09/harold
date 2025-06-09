@@ -1,0 +1,313 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, user-scalable=no" />
+  <title>Coach Dashboard - VUMP IT</title>
+  <style>
+/* === RESET & BASE === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 1024px;
+  height: 600px;
+  font-family: 'Poppins', sans-serif;
+  color: #222;
+  background-image: url('BACKGROUND.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+}
+
+/* === HEADER === */
+.header {
+  height: 110px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 25px;
+  position: relative;
+}
+
+/* Logo */
+.logo {
+  position: absolute;
+  top: 10px;
+  left: 30px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 3;
+}
+
+.logo img {
+  width: 191px;
+  height: 91px;
+}
+
+/* === LOGOUT BUTTON === */
+.logout-btn {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  user-select: none;
+  z-index: 4;
+  border: 2px solid rgb(36, 144, 3);
+}
+
+.logout-btn:hover {
+  background-color: #dadadaee;
+}
+
+.logout-btn .btn-icon {
+  width: 40px;
+  height: 40px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.263);
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+  border-radius: 10px;
+  border: 2px solid rgba(144, 141, 141, 0.419);
+}
+
+/* === MODAL === */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+/* Modal Box */
+.modal-box {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 20px;
+  text-align: center;
+  width: 450px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: rgb(0, 0, 0);
+  font-family: 'Poppins', sans-serif;
+}
+
+.modal-message {
+  font-size: 18px;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+/* Modal Buttons */
+.modal-actions button {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 25px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  margin: 0 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.yes-btn {
+  background-color: #ec6c0b;
+  color: white;
+}
+
+.no-btn {
+  background-color: #ccc;
+  color: black;
+}
+
+.yes-btn:hover {
+  background-color: #c55309;
+}
+
+.no-btn:hover {
+  background-color: #bbb;
+}
+
+/* === CONTENT === */
+.overlay {
+  padding: 120px 40px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding-top: 20px;
+  padding-bottom: 0px;
+  padding-right: 30px;
+}
+
+/* === TEXT BLOCK === */
+.text-block h1 {
+  font-size: 40px;
+  color: white;
+  font-weight: 900;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #f0f0f0;
+  font-weight: 600;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+}
+
+/* === DASHBOARD GRID === */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+
+/* === WIDGET CARDS === */
+.widget-card {
+  background-color: white;
+  border-left: 8px solid #ccc;
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.widget-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+}
+
+.card-title {
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 10px;
+  color: #444;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: #2e7d32;
+}
+
+.card-sub {
+  font-size: 13px;
+  color: #777;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.card-sports    { border-left-color: #42a5f5; }
+.card-classes   { border-left-color: #ba68c8; }
+.card-students  { border-left-color: #ffb300; }
+.card-athletes  { border-left-color: #66bb6a; }
+
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">
+      <img src="assets/logo.png" alt="Logo" />
+    </div>
+  </div>
+
+<!-- Log Out Button -->
+<button class="logout-btn" onclick="openModal()">
+  <img src="assets/logouticon.png" class="btn-icon" alt="Logout" />
+  <span>Log Out</span>
+</button>
+
+<!-- Modal Overlay and Modal Box -->
+<div id="logoutModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-title">LOG OUT</div>
+    <div class="modal-message">Are you sure you want to log out?</div>
+    <div class="modal-actions">
+      <button class="no-btn" onclick="closeModal()">No</button>
+      <button class="yes-btn" onclick="logout()">Yes</button>
+    </div>
+  </div>
+</div>
+
+  <!-- Content -->
+  <div class="overlay">
+    <div class="text-block">
+      <h1>Welcome, <strong>COACH</strong>!</h1>
+      <p class="subtitle">Monitor your classes, athletes, and responsibilities</p>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="widget-card card-sports">
+        <div class="card-title">🥇 Assigned Sport</div>
+        <div class="card-value"><span id="sport">DATA</span></div>
+      </div>
+      <div class="widget-card card-classes" onclick="window.location.href='viewclass.html'" style="cursor: pointer;">
+        <div class="card-title">📘 Classes You Teach</div>
+        <div class="card-value"><span id="total-class">DATA</span></div>
+        <div class="card-sub">Classes this semester</div>
+      </div>
+      
+      <div class="widget-card card-athletes" onclick="window.location.href='viewathletes.html'" style="cursor: pointer;">
+        <div class="card-title">🏃‍♂️ Athletes Under Your Guidance</div>
+        <div class="card-value"><span id="total-athletes">DATA</span></div>
+        <div class="card-sub">Student-athletes</div>
+      </div>
+      <div class="widget-card card-students" onclick="window.location.href='viewall.html'" style="cursor: pointer;">
+        <div class="card-title">👨‍🏫 Total Students Enrolled</div>
+        <div class="card-value"><span id="total-all">DATA</span></div>
+        <div class="card-sub">Students in total</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('sport').textContent = 'Basketball';
+    document.getElementById('total-class').textContent = '5';
+    document.getElementById('total-athletes').textContent = '50';
+    document.getElementById('total-all').textContent = '300';
+
+    // Modal functions
+    function openModal() {
+      document.getElementById('logoutModal').style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById('logoutModal').style.display = "none";
+    }
+
+    function logout() {
+      window.location.href = 'index.html'; // Redirect to index.html
+    }
+  </script>
+</body>
+</html>

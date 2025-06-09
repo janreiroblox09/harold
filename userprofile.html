@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, user-scalable=no" />
+  <title>VUMP IT</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* Base reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 1024px;
+      height: 600px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+      position: relative;
+      background-image: url("assets/background.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+    }
+
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 30px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 3;
+    }
+
+    .logo img {
+      width: 191px;
+      height: 91px;
+    }
+
+    .menu-icon {
+      position: absolute;
+      top: 35px;
+      right: 30px;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .menu-icon div {
+      width: 35px;
+      height: 6px;
+      background-color: white;
+      margin: 6px 0;
+      border-radius: 100px;
+    }
+
+    .menu-popup {
+      position: absolute;
+      top: 80px;
+      right: 40px;
+      background-color: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 5;
+      transition: opacity 0.3s ease;
+    }
+
+    .menu-popup.hidden {
+      display: none;
+    }
+
+    .menu-icon.active div {
+      background-color: #ffffff6c;
+    }
+
+    .popup-btn {
+      background-color: #ffffff;
+      color: rgb(0, 0, 0);
+      border: none;
+      padding: 12px 24px 12px 18px;
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+    }
+
+    .popup-btn:hover {
+      background-color: #dadadaee;
+    }
+
+    .popup-btn .btn-icon {
+      width: 40px;
+      height: 40px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.263);
+      transition: transform 0.1s ease, box-shadow 0.2s ease;
+      border-radius: 10px;
+      border: 2px solid rgba(144, 141, 141, 0.419);
+    }
+
+    /* Profile Tab */
+    .profile-tab {
+      position: absolute;
+      top: 125px;
+      left: 0;
+      background-color: white;
+      padding: 5px 50px 5px 60px;
+      border-top-right-radius: 40px;
+      border-bottom-right-radius: 40px;
+      font-size: 28px;
+      font-weight: 800;
+      color: #005b79;
+      z-index: 4;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Student Info Section */
+    .student-info {
+      position: absolute;
+      top: 150px;
+      left: 20px;
+      padding: 24px 28px;
+      border-radius: 12px;
+      width: 360px;
+      line-height: 1.7;
+      font-size: 15px;
+      z-index: 1;
+      background: none;
+      backdrop-filter: none;
+    }
+
+    .student-name-role {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+
+    .student-info h1 {
+      font-size: 30px;
+      font-weight: 700;
+      margin-top: 15px;
+    }
+
+    .student-info h3 {
+      font-size: 24px;
+      font-weight: 500;
+      color: white;
+      margin-top: -1px;
+      margin-bottom: -10px;
+    }
+
+    .student-info hr {
+      border: none;
+      height: 2px;
+      background-color: white;
+      margin-bottom: 5px;
+      margin-top: -3px;
+    }
+
+    .student-info p {
+      display: flex;
+      margin: 3px 0;
+      margin-left: 0px;
+     
+    }
+
+    .student-info p span:first-child {
+      font-weight: 400;
+      color: white;
+      min-width: 80px;
+      display: inline-block;
+      font-size: 17px;
+    }
+
+    .student-info p span:last-child {
+      font-weight: 700;
+      color: white;
+      font-size: 17px;
+      max-width: 400px;
+    }
+
+    /* BMI and Jump Stats Boxes */
+    .bmi-stats-box, .jump-stats-box {
+      position: absolute;
+      top: 120px;
+      width: 280px;
+      background-color: white;
+      color: black;
+      border-radius: 20px;
+      padding: 20px 20px 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .bmi-stats-box {
+      left: 420px;
+      margin-top: 20px;
+    }
+
+    .jump-stats-box {
+      left: 720px;
+      margin-top: 20px;
+    }
+
+    .bmi-stats-box h2,
+    .jump-stats-box h2 {
+      font-size: 18px;
+      font-weight: 800;
+      text-align: center;
+      color: #008a30;
+      margin-bottom: 15px;
+    }
+
+    .bmi-stats-box p, .jump-stats-box p {
+      display: flex;
+      align-items: center;
+      margin: 6px 0;
+      gap: 10px;
+      white-space: nowrap;
+    }
+
+    .bmi-stats-box p span:first-child {
+      font-weight: 600;
+      color: #000000;
+      width: 60px;
+      flex-shrink: 0;
+      display: inline-block;
+    }
+
+    .jump-stats-box p span:first-child {
+      font-weight: 600;
+      color: #000000;
+      width: 170px;
+      flex-shrink: 0;
+      display: inline-block;
+    }
+
+    /* View History buttons styling */
+    .stats-btn {
+      align-self: center;
+      margin-top: 10px;
+      margin-bottom: -5px;
+      background-color: #0db149;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      padding: 10px 30px;
+      border-radius: 25px;
+      border: none;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+      user-select: none;
+    }
+
+    .stats-btn:hover {
+      background-color: #009634;
+    }
+
+    /* Start Measurement Button */
+    .start-measurement-btn {
+      position: absolute;
+      top: 449px;
+      left: 590px;
+      background: linear-gradient(to bottom right, #f37a53, #f15a29);
+      color: white;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      border: 3px solid #f49275;
+      padding: 10px 35px;
+      border-radius: 18px;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      text-align: left;
+      flex-direction: row;
+    }
+
+    .start-measurement-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    }
+
+    .start-measurement-btn img {
+      width: 210px;
+      height: 60px;
+      filter: brightness(0) invert(1);
+      margin-left: -10px;
+      margin-right: -55px;
+    }
+
+    /* Popup Overlay */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 1024px;
+      height: 600px;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(5px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .popup-overlay.hidden {
+      display: none;
+    }
+
+    /* Popup Container */
+    .popup-container {
+      background-color: white;
+      border-radius: 20px;
+      padding: 30px 50px;
+      text-align: center;
+      color: black;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.25);
+      position: relative;
+      width: 600px;
+      height: 350px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .popup-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: black;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+    }
+
+    .popup-measurement-options {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 60px;
+      margin-top: 10px;
+    }
+
+    .measurement-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .measurement-img {
+      width: 170px;
+      height: auto;
+      margin-top: -20px;
+    }
+
+    .measurement-btn {
+      width: 160px;
+      height: 50px;
+      font-size: 15px;
+      font-weight: bold;
+      padding: 3px 5px;
+      border-radius: 18px;
+      border: 3px solid #f49275;
+      background: linear-gradient(to bottom right, #f37a53, #f15a29);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1.1;
+      text-transform: uppercase;
+      flex-direction: column;
+    }
+
+    .measurement-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      font-size: 24px;
+      font-weight: bold;
+      background: none;
+      border: none;
+      color: #555;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .popup-close:hover {
+      color: black;
+    }
+
+    body.blurred::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 1024px;
+      height: 600px;
+      backdrop-filter: blur(5px);
+      z-index: 9;
+    }
+    .date-stamp {
+      font-size: 12px;
+      color: gray;
+      text-align: center;
+      margin-top: -10px;
+      margin-bottom: 5px;
+    }
+
+
+/* === MODAL === */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+/* Modal Box */
+.modal-box {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 20px;
+  text-align: center;
+  width: 450px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: rgb(0, 0, 0);
+  font-family: 'Poppins', sans-serif;
+}
+
+.modal-message {
+  font-size: 18px;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+/* Modal Buttons */
+.modal-actions button {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 25px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  margin: 0 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.yes-btn {
+  background-color: #21aa02;
+  color: white;
+}
+
+.no-btn {
+  background-color: #ccc;
+  color: black;
+}
+
+.yes-btn:hover {
+  background-color: #21aa02;
+}
+
+.no-btn:hover {
+  background-color: #bbb;
+}
+  </style>
+</head>
+<body>
+
+<!-- Popup Menu -->
+<div id="menu-popup" class="menu-popup hidden">
+  <button class="popup-btn" onclick="window.location.href='jumptutorial.html'">
+    <img src="assets/devicetutorialicon.png" class="btn-icon" alt="Tutorial Icon" />
+    <span id="menu-tutorial">Jump Tutorial</span>
+  </button>
+  <button class="popup-btn" onclick="openModal()">
+    <img src="assets/logouticon.png" class="btn-icon" alt="Log Out Icon" />
+    <span id="menu-logout">Log Out</span>
+  </button>
+</div>
+
+<!-- Modal Overlay and Modal Box -->
+<div id="logoutModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-title">LOG OUT</div>
+    <div class="modal-message">Are you sure you want to log out?</div>
+    <div class="modal-actions">
+      <button class="no-btn" onclick="closeModal()">No</button>
+      <button class="yes-btn" onclick="logout()">Yes</button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Logo -->
+<div class="logo">
+  <img src="assets/logo.png" alt="Logo" />
+</div>
+
+<!-- Profile Tab -->
+<div class="profile-tab">
+  <span id="profile-tab">PROFILE</span>
+</div>
+
+<!-- Student Info Section -->
+<div class="student-info">
+  <div class="student-name-role">
+    <h1 id="user-name">DATA</h1>
+    <h3 id="user-type">DATA</h3>
+  </div>
+  <hr />
+  <p><span>User ID:</span> <span id="user-id">DATA</span></p>
+  <p><span>Coach:</span> <span id="coachname">DATA</span></p>
+  <p><span>Sport:</span> <span id="sport">DATA</span></p>
+  <p><span>Gender:</span> <span id="gender">DATA</span></p>
+  <p><span>College:</span> <span id="college">DATA</span></p>
+  <p><span>Course:</span> <span id="course">DATA</span></p>
+  <p><span>Year:</span> <span id="year">DATA</span></p>
+  <p><span>Section:</span> <span id="section">DATA</span></p>
+
+</div>
+<!-- BMI Statistics Section -->
+<div class="bmi-stats-box">
+  <h2 id="bmi-title">BMI STATISTICS</h2>  <!-- Date stamp -->
+  <div class="date-stamp">
+    Last updated: <span id="bmi-current-date">DATA</span>
+  </div>
+  <p><span>Height:</span> <span><strong id="current-height">DATA</strong></span></p>
+  <p><span>Weight:</span> <span><strong id="current-weight">DATA</strong></span></p>
+  <p><span>BMI:</span> <span><strong id="current-bmi">DATA</strong></span></p>
+  <p><span>RATING:</span> <span><strong id="current-bmi-rating">DATA</strong></span></p>
+  <a href="bmistatisticshistory.html" class="stats-btn" id="bmi-btn">View History</a>
+</div>
+
+<!-- Jump Height Statistics Section -->
+<div class="jump-stats-box">
+  <h2 id="jump-title">JUMP HEIGHT STATISTICS</h2>
+    <!-- Date stamp -->
+  <div class="date-stamp">
+    Last updated: <span id="jump-current-date">DATA</span>
+  </div>
+  <p><span>Standing Reach Height:</span> <span><strong id="current-standing-reach">DATA</strong></span></p>
+  <p><span>Jump Reach Height:</span> <span><strong id="current-jump-reach">DATA</strong></span></p>
+  <p><span>Vertical Jump Height:</span> <span><strong id="current-vertical-jump">DATA</strong></span></p>
+  <p><span>RATING:</span> <span><strong id="current-jump-rating">DATA</strong></span></p>
+  <a href="jumpheightstatisticshistory.html" class="stats-btn" id="jump-btn">View History</a>
+</div>
+
+<!-- Start Measurement Button -->
+<button class="start-measurement-btn" onclick="window.location.href='weightmeasurement.html'">
+  <img src="assets/starticon.png" alt="Play Icon" />
+  <br />
+</button>
+
+
+<!-- Menu Icon -->
+<div class="menu-icon">
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+
+<!-- Script -->
+<script>
+const menuIcon = document.querySelector('.menu-icon');
+  const menuPopup = document.getElementById('menu-popup');
+
+  menuIcon.addEventListener('click', (e) => {
+    e.stopPropagation();
+    menuIcon.classList.toggle('active');
+    menuPopup.classList.toggle('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!menuPopup.contains(e.target) && !menuIcon.contains(e.target)) {
+      menuPopup.classList.add('hidden');
+      menuIcon.classList.remove('active');
+    }
+  });
+
+  // Modal functions
+  function openModal() {
+    document.getElementById('logoutModal').classList.remove('hidden');
+  }
+
+  function closeModal() {
+    document.getElementById('logoutModal').classList.add('hidden');
+  }
+
+  function logout() {
+    window.location.href = 'index.html'; // Redirect to index.html
+  }
+
+  const userData = {
+    name: "Juan Santos",
+    role: "Student",
+    userId: "U2024001",
+    sport: "Basketball",
+    gender: "Male",
+    college: "Engineering",
+    course: "Bachelor of Science in Computer Engineering",
+    year: "3rd Year",
+    section: "A",
+    coachname: "Jose Rizal",
+    bmiHeight: "180 cm",
+    bmiWeight: "75 kg",
+    bmiValue: "23.1",
+    bmiRating: "Normal",
+    jumpStanding: "225 cm",
+    jumpReach: "275 cm",
+    jumpHeight: "50 cm",
+    jumpRating: "Excellent",
+    bmicurrentDate: "2025-06-07",
+    jumpcurrentDate: "2025-06-07"
+  };
+
+  // Set the data to profile information
+  document.getElementById("user-name").textContent = userData.name;
+  document.getElementById("user-type").textContent = userData.role;
+  document.getElementById("user-id").textContent = userData.userId;
+  document.getElementById("sport").textContent = userData.sport;
+  document.getElementById("gender").textContent = userData.gender;
+  document.getElementById("college").textContent = userData.college;
+  document.getElementById("course").textContent = userData.course;
+  document.getElementById("year").textContent = userData.year;
+  document.getElementById("section").textContent = userData.section;
+  document.getElementById("coachname").textContent = userData.coachname;
+  document.getElementById("current-height").textContent = userData.bmiHeight;
+  document.getElementById("current-weight").textContent = userData.bmiWeight;
+  document.getElementById("current-bmi").textContent = userData.bmiValue;
+  document.getElementById("current-bmi-rating").textContent = userData.bmiRating;
+  document.getElementById("current-standing-reach").textContent = userData.jumpStanding;
+  document.getElementById("current-jump-reach").textContent = userData.jumpReach;
+  document.getElementById("current-vertical-jump").textContent = userData.jumpHeight;
+  document.getElementById("current-jump-rating").textContent = userData.jumpRating;
+  document.getElementById("bmi-current-date").textContent = userData.bmicurrentDate;
+  document.getElementById("jump-current-date").textContent = userData.jumpcurrentDate; // Set the current date dynamically
+
+  function openPopup() {
+    document.getElementById('popup-overlay').classList.remove('hidden');
+    document.body.classList.add('blurred');
+  }
+
+  function closePopup() {
+    document.getElementById('popup-overlay').classList.add('hidden');
+    document.body.classList.remove('blurred');
+  }
+</script>
+
+<script src="menu-toggle.js"></script>
+</body>
+</html>

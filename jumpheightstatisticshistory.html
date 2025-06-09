@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, user-scalable=no">
+  <title>VUMP IT</title>
+  <style>
+    /* Base reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 1024px;
+      height: 600px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+      background-image: url('assets/background.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      position: relative;
+    }
+
+    /* Logo */
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 30px;
+      z-index: 3;
+    }
+
+    .logo img {
+      width: 190px;
+      height: auto;
+    }
+
+    /* Profile Tab */
+    .profile-tab {
+      position: absolute;
+      top: 125px;
+      left: 0;
+      background-color: white;
+      padding: 5px 50px 5px 60px;
+      border-top-right-radius: 40px;
+      border-bottom-right-radius: 40px;
+      font-size: 28px;
+      font-weight: 800;
+      color: #005b79;
+      z-index: 4;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Main Content Container */
+    .content-container {
+      position: absolute;
+      top: 210px;
+      left: 100px;
+      width: 824px;
+      height: 330px;
+      background-color: white;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: row;
+      padding: 25px 35px;
+      gap: 50px;
+      color: black;
+    }
+
+    /* Left panel for student info */
+    .left-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      width: 300px;
+      margin-top: -30px;
+    }
+
+    .section-title1 {
+      color: #00b858;
+      font-weight: 800;
+      font-size: 22px;
+      text-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+      margin-left: 70px;
+    }
+
+    .section-title2 {
+      color: #000000;
+      font-weight: 500;
+      font-size: 19px;
+      text-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+      margin-left: 110px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+    .left-panel p {
+      font-size: 18px;
+      font-weight: 600;
+      position: relative;
+      display: flex;
+      margin-left: 35px;
+    }
+
+    .left-panel p strong {
+      min-width: 240px;
+      display: inline-block;
+      font-weight: 700;
+      color: black;
+      margin-left: -25px;
+    }
+
+    .left-panel p span {
+      font-weight: 600;
+      color: black;
+    }
+
+    .rating {
+      font-weight: 800;
+    }
+
+    /* Graph panel for BMI chart */
+    .graph-panel {
+      flex-grow: 1;
+      position: relative;
+    }
+
+    .graph-panel canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    /* === BOTTOM-LEFT BACK BUTTON === */
+.visible-back {
+  position: absolute;
+  top: 40px;
+  left: 900px;
+  z-index: 10;
+}
+
+.back-btn {
+  background-color: #f15a29;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 28px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.back-btn:hover {
+  background-color: #256227;
+}
+
+    /* Date stamp styling */
+    .date-stamp {
+      font-size: 12px;
+      color: rgba(0, 128, 0, 0); /* Set color of the date stamp to green */
+      text-align: center; /* Center-align the date stamp */
+      margin-top: -60px;
+    }
+
+      /* Recommendation Button */
+    .recommendation-btn {
+      position: absolute;
+      top: 470px; /* vertical position */
+      right: 610px; /* horizontal position */
+      background-color: #0db149;
+      color: rgb(255, 255, 255);
+      padding: 8px 17px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.3s ease;
+      border: 3px solid #2caf04d7;
+      z-index: 6; /* ensures above other elements */
+    }
+
+    .recommendation-btn:hover {
+      background-color: #30881c;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Logo -->
+  <div class="logo">
+    <img src="assets/logo.png" alt="Logo" />
+  </div>
+
+  <!-- Profile Tab -->
+  <div class="profile-tab">
+    <span id="profile-tab-title">JUMP HEIGHT STATISTICS HISTORY</span>
+  </div>
+
+   <!-- Recommendation Button -->
+  <button class="recommendation-btn" id="recommendation-btn">VIEW RECOMMENDATIONS</button>
+
+  <script>
+    // Recommendation redirect
+    document.getElementById("recommendation-btn").addEventListener("click", () => {
+      window.location.href = "recommendation.html";
+    });
+  </script>
+
+  <!-- Main Content -->
+  <div class="content-container">
+    <div class="left-panel">
+      <!-- Date stamp -->
+      <div class="date-stamp">
+        DATE: <span id="jump-current-date">DATA</span>
+      </div>
+      <h2 class="section-title1 center-title">DATE RECORDED: </h2>
+      <h3 class="section-title2 center-title" id="latest-record-title">DATE</h3>
+      <p><strong>Standing Reach Height:</strong> <span id="current-standing-reach">DATA</span> cm</p>
+      <p><strong>Jump Reach Height:</strong> <span id="current-jump-reach">DATA</span> cm</p>
+      <p><strong>Vertical Jump Height:</strong> <span id="current-vertical-jump">DATA</span> cm</p>
+      <p><strong>RATING:</strong> <span class="rating" id="current-jump-rating">DATA</span></p>
+    </div>
+
+    <div class="graph-panel">
+      <canvas id="jumpChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Back Button (Lower Left) -->
+  <div class="visible-back">
+    <button class="back-btn" onclick="window.location.href='userprofile.html'">← Back</button>
+  </div>
+
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+ const jumpData = { 
+      standingReach: "220",
+      jumpReach: "270",
+      verticalJump: "50",
+      rating: "Excellent",
+      dates: ["2025-06-01", "2025-06-02", "2025-06-03", "2025-06-04", "2025-06-07"], // Example dates, last date is 2025-06-07 (latest record)
+      profileTitle: "JUMP HEIGHT STATISTICS HISTORY",
+      backLabel: "BACK",
+      currentDate: "2025-06-07", // Corrected last updated date
+      standingReachHeights: ["210", "215", "220", "225", "230"],
+      jumpReachHeights: ["260", "265", "270", "275", "280"],
+      verticalJumps: ["45", "48", "50", "52", "53"]
+    };
+
+    // Function to calculate Jump Rating based on jump height
+    function calculateJumpRating(jumpHeight) {
+      if (jumpHeight >= 30 && jumpHeight <= 35) return "Excellent";
+      else if (jumpHeight >= 25 && jumpHeight < 30) return "Good";
+      else if (jumpHeight >= 20 && jumpHeight < 25) return "Average";
+      else if (jumpHeight >= 15 && jumpHeight < 20) return "Below Average";
+      else return "Poor";
+    }
+
+    // Example: Calculate and update the rating based on the vertical jump height
+    jumpData.ratings = jumpData.verticalJumps.map(jump => calculateJumpRating(parseInt(jump)));
+    console.log(jumpData.ratings); // Logs the updated jump ratings
+
+
+    // Update textual data
+    document.getElementById("current-standing-reach").textContent = jumpData.standingReach;
+    document.getElementById("current-jump-reach").textContent = jumpData.jumpReach;
+    document.getElementById("current-vertical-jump").textContent = jumpData.verticalJump;
+    document.getElementById("current-jump-rating").textContent = jumpData.rating;
+    document.getElementById("profile-tab-title").textContent = jumpData.profileTitle;
+    document.getElementById("latest-record-title").textContent = ` ${jumpData.currentDate}`; // Update latest record title dynamically
+    document.getElementById("jump-current-date").textContent = jumpData.currentDate; // Set the current date dynamically
+
+
+    // Dynamic Chart rendering
+    const ctx = document.getElementById('jumpChart').getContext('2d');
+    const jumpChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: jumpData.dates, // Use dates for the X-axis
+        datasets: [{
+          label: 'Vertical Jump Height (cm)',
+          data: jumpData.verticalJumps,
+          borderColor: '#00c282',
+          backgroundColor: 'transparent',
+          tension: 0.4,
+          pointBackgroundColor: '#00c282',
+          pointRadius: 10, // Make the dots bigger for easy clicking
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            labels: {
+              color: 'black'
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: (context) => `Jump Height: ${context.parsed.y} cm`
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: 'black'
+            },
+            grid: {
+              display: false
+            }
+          },
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: 'black'
+            },
+            grid: {
+              color: '#ccc'
+            }
+          }
+        },
+        onClick: function(event, elements) {
+          // Handle click on a point on the graph
+          if (elements.length > 0) {
+            const index = elements[0].index; // Get the clicked index
+            const clickedDate = jumpData.dates[index]; // Get the corresponding date
+
+            // Update the placeholders based on the clicked date
+            document.getElementById("jump-current-date").textContent = clickedDate; // Set the clicked date
+            document.getElementById("latest-record-title").textContent = clickedDate; // Change title to the clicked date
+            document.getElementById("current-standing-reach").textContent = jumpData.standingReachHeights[index]; // Update standing reach based on clicked index
+            document.getElementById("current-jump-reach").textContent = jumpData.jumpReachHeights[index]; // Update jump reach based on clicked index
+            document.getElementById("current-vertical-jump").textContent = jumpData.verticalJumps[index]; // Update vertical jump
+            document.getElementById("current-jump-rating").textContent = jumpData.ratings[index]; // Update jump rating dynamically
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

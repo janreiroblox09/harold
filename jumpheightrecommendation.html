@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, user-scalable=no" />
+  <title>VUMP IT</title>
+  <style>
+    /* Base reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 1024px;
+      height: 600px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+      position: relative;
+      background-image: url('assets/background.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+    }
+
+    /* Logo */
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 30px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 3;
+    }
+
+    .logo img {
+      width: 191px;
+      height: 91px;
+    }
+
+    /* Download PDF Button */
+    .download-pdf-btn {
+      position: absolute;
+      top: 35px;
+      right: 30px;
+      background-color: #1e9504;
+      color: white;
+      border: 1.5px solid white;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 3px 6px rgba(13, 177, 73, 0.5);
+      transition: background-color 0.3s ease;
+      z-index: 10;
+      user-select: none;
+    }
+
+    .download-pdf-btn:hover {
+      background-color: #009634;
+    }
+
+    /* Edit Button */
+    .edit-btn {
+      position: absolute;
+      top: 35px;
+      right: 150px; /* Slightly left of the Download PDF button */
+      background-color: #f1c232;
+      color: white;
+      border: 1.5px solid white;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 3px 6px rgba(255, 193, 0, 0.5);
+      transition: background-color 0.3s ease;
+      z-index: 10;
+      user-select: none;
+    }
+
+    .edit-btn:hover {
+      background-color: #f0a800;
+    }
+
+    /* Profile Tab */
+    .profile-tab {
+      position: absolute;
+      top: 125px;
+      left: 0;
+      background-color: white;
+      padding: 5px 50px 5px 60px;
+      border-top-right-radius: 40px;
+      border-bottom-right-radius: 40px;
+      font-size: 28px;
+      font-weight: 800;
+      color: #005b79;
+      z-index: 4;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Recommendation Box */
+    .recommendation-box h3 {
+      margin-top: 20px;
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    .recommendation-box ul {
+      margin-left: 20px;
+      list-style-type: disc;
+    }
+
+    /* Back Button */
+    .back-button {
+      position: absolute;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(to bottom right, #f37a53, #f15a29);
+      color: white;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      font-weight: bold;
+      font-size: 20px;
+      padding: 10px 37px;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      z-index: 4;
+    }
+
+    .back-button:hover {
+      background-color: #e04a1f;
+    }
+
+    /* Recommendation Box */
+    .recommendation-box {
+      position: absolute;
+      top: 190px;
+      left: 25px;
+      width: 980px;
+      height: 320px;
+      background-color: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(6px);
+      border-radius: 0;
+      padding: 20px;
+      overflow-y: auto;
+      font-size: 16px;
+      line-height: 1.5;
+      color: white;
+      z-index: 3;
+      scrollbar-gutter: stable both-edges;
+    }
+
+    /* Custom scrollbar inside the box border */
+    .recommendation-box::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .recommendation-box::-webkit-scrollbar-track {
+      background: transparent;
+      border-radius: 0;
+    }
+
+    .recommendation-box::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 0;
+    }
+
+    .recommendation-box::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Logo -->
+  <div class="logo">
+    <img src="assets/logo.png" alt="Logo" />
+  </div>
+
+  <!-- Download PDF Button -->
+  <button
+    id="downloadPdfBtn"
+    title="Download Recommendations PDF"
+    aria-label="Download Recommendations PDF"
+    class="download-pdf-btn"
+  >
+    📄 Download PDF
+  </button>
+
+  <!-- Edit Button -->
+  <button
+    id="editBtn"
+    class="edit-btn"
+  >
+    ✏️ Edit
+  </button>
+
+  <!-- Profile Tab -->
+  <div class="profile-tab">
+    <span id="profileTabTitle">RECOMMENDATIONS</span>
+  </div>
+
+  <!-- Recommendation Content -->
+  <div class="recommendation-box">
+    <div class="recommendation-content">
+      <h3><span id="trainingFocusTitle">Training Focus</span></h3>
+      <ul>
+        <li><span id="trainingItem1">Focus on barbell squats, lunges, and deadlifts.</span></li>
+        <li><span id="trainingItem2">Use contrast training (e.g. heavy squats + jump squats).</span></li>
+        <li><span id="trainingItem3">Incorporate core and balance drills like planks and single-leg drills.</span></li>
+      </ul>
+
+      <h3><span id="plyometricTitle">Plyometric Development</span></h3>
+      <ul>
+        <li><span id="plyometricItem1">Perform depth jumps and lateral hurdle hops.</span></li>
+        <li><span id="plyometricItem2">Emphasize short ground contact and soft landings.</span></li>
+      </ul>
+
+      <h3><span id="recoveryTitle">Recovery and Monitoring</span></h3>
+      <ul>
+        <li><span id="recoveryItem1">Maintain 7–9 hours of sleep and proper hydration.</span></li>
+        <li><span id="recoveryItem2">Foam roll and stretch after training. Retest every 6–8 weeks.</span></li>
+      </ul>
+
+      <h3><span id="remarksTitle">VUMPIT's Remarks</span></h3>
+      <ul>
+        <li><span id="remarksText">Athlete is progressing well. Continue using the system to monitor improvement.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <a href="studentprofile.html" class="back-button"><span id="backButtonText">BACK</span></a>
+
+  <!-- Edit Button Functionality -->
+  <script>
+    const editButton = document.getElementById('editBtn');
+    let isEditing = false;
+
+    editButton.addEventListener('click', () => {
+      const elementsToEdit = document.querySelectorAll('.recommendation-box span');
+      if (isEditing) {
+        // Save the changes (currently no actual save mechanism, can be extended)
+        editButton.textContent = '✏️ Edit';
+        elementsToEdit.forEach(el => {
+          el.setAttribute('contenteditable', 'false');
+        });
+      } else {
+        // Enable editing
+        editButton.textContent = '💾 Save';
+        elementsToEdit.forEach(el => {
+          el.setAttribute('contenteditable', 'true');
+        });
+      }
+      isEditing = !isEditing;
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Add User - VUMP IT</title>
+  <style>
+    /* Base Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-image: url('BACKGROUND.png');
+      background-repeat: no-repeat;
+      background-size: 1024px 600px;
+      background-position: top left;
+      width: 1024px;
+      height: 600px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: rgb(12, 11, 11);
+    }
+
+    /* Container */
+    .container {
+      background: rgba(255 255 255 / 0.9);
+      border-radius: 20px;
+      padding: 24px 32px;
+      width: 960px;
+      height: 560px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: gray transparent;
+    }
+
+    /* Custom scrollbar for webkit */
+    .container::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .container::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .container::-webkit-scrollbar-thumb {
+      background-color: gray;
+      border-radius: 4px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding: 12px 32px;
+      background-color: #4BB543;
+      border-radius: 18px;
+      box-shadow: 0 6px 14px rgba(75, 181, 67, 0.4);
+      border: 1.5px solid #3A8E3C;
+      flex-shrink: 0;
+      user-select: none;
+      position: relative;
+      height: 90px;
+      transition: background-color 0.3s ease;
+    }
+
+    .header:hover {
+      background-color: #5CC25F;
+      box-shadow: 0 8px 18px rgba(75, 181, 67, 0.6);
+    }
+
+    .logo-img {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      height: 75px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(242, 97, 46, 0.5));
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      padding: 8px 24px;
+      background-color: #f2612e;
+      color: white;
+      font-weight: 700;
+      border-radius: 25px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 14px;
+      box-shadow: 0 5px 14px rgba(242, 97, 46, 0.7);
+      user-select: none;
+      transition: background-color 0.25s ease, box-shadow 0.25s ease;
+      flex-shrink: 0;
+      height: 40px;
+      line-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+
+    .back-btn:hover,
+    .back-btn:focus {
+      background-color: #d44c1a;
+      box-shadow: 0 8px 22px rgba(212, 76, 26, 0.9);
+      outline: none;
+    }
+
+    .page-title {
+      font-weight: 900;
+      font-size: 32px;
+      margin-bottom: 28px;
+      color: #2B6E2A;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.15);
+      user-select: none;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      flex-grow: 1;
+      overflow-y: auto;
+      padding-right: 6px;
+      scrollbar-width: thin;
+      scrollbar-color: gray transparent;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      font-size: 13px;
+      user-select: none;
+    }
+
+    input[type="text"],
+    select {
+      padding: 8px 12px;
+      border: 2px solid #ddd;
+      border-radius: 15px;
+      font-size: 14px;
+      transition: border-color 0.3s ease;
+      font-family: inherit;
+      color: rgb(12, 11, 11);
+    }
+
+    input[type="text"]:focus,
+    select:focus {
+      outline: none;
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 14px;
+      margin-top: 12px;
+      flex-shrink: 0;
+    }
+
+    .confirm-btn,
+    .cancel-btn {
+      padding: 8px 24px;
+      font-weight: 700;
+      border-radius: 25px;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      user-select: none;
+      transition: background-color 0.25s ease;
+      box-shadow: none !important;
+    }
+
+    .confirm-btn {
+      background-color: #f2612e;
+      color: white;
+    }
+
+    .confirm-btn:hover,
+    .confirm-btn:focus {
+      background-color: #d44c1a;
+      outline: none;
+      box-shadow: none !important;
+    }
+
+    .cancel-btn {
+      background-color: white;
+      color: #f2612e;
+    }
+
+    .cancel-btn:hover,
+    .cancel-btn:focus {
+      background-color: #fbe8dc;
+      outline: none;
+      box-shadow: none !important;
+    }
+
+    /* Modal Overlay */
+    #modalOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    /* Modal Box */
+    #modal {
+      background: white;
+      border-radius: 16px;
+      padding: 24px 32px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      text-align: center;
+      user-select: none;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    #modal h2 {
+      margin-bottom: 12px;
+      font-weight: 700;
+      font-size: 20px;
+      color: #2B6E2A;
+    }
+
+    #modal p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    #modal button {
+      background-color: #f2612e;
+      border: none;
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 10px 30px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.25s ease;
+      user-select: none;
+    }
+
+    #modal button:hover,
+    #modal button:focus {
+      background-color: #d44c1a;
+      outline: none;
+    }
+
+  </style>
+</head><body>
+  <div class="container" role="main" aria-label="Add New User Form">
+    <header class="header">
+      <div class="logo">
+        <img src="elements/elements/INTERFACE 0 - GENERAL ELEMENTS/LOGO.png" alt="Logo" class="logo-img" />
+      </div>
+      <a href="#" class="back-btn" role="button" aria-label="Go back to previous page" onclick="window.history.back(); return false;">← Back</a>
+    </header>
+
+    <h1 class="page-title"><strong>ADD NEW CLASS</strong></h1>
+
+    <form id="addUserForm" novalidate>
+      <div class="form-group" id="class-name-group">
+        <label for="class-name">Class Name</label>
+        <input type="text" id="class-name" name="class-name" placeholder="Enter Class Name" required aria-required="true" />
+      </div>
+
+      <div class="form-group" id="user-college-group">
+        <label for="user-college">College</label>
+        <select id="user-college" name="user-college" required aria-required="true">
+          <option value="" disabled selected>Select College</option>
+          <option value="College of Administration, Business, Hospitality and Accountancy">College of Administration, Business, Hospitality and Accountancy</option>
+          <option value="College of Agriculture">College of Agriculture</option>
+          <option value="College of Allied Medicine">College of Allied Medicine</option>
+          <option value="College of Arts and Sciences">College of Arts and Sciences</option>
+          <option value="College of Engineering">College of Engineering</option>
+          <option value="College of Industrial Technology">College of Industrial Technology</option>
+          <option value="College of Teacher Education">College of Teacher Education</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="course-group">
+        <label for="course">Course</label>
+        <select id="course" name="course" disabled required aria-required="true">
+          <option value="" disabled selected>Select Course</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="year-group">
+        <label for="year">Year Level</label>
+        <select id="year" name="year" required aria-required="true">
+          <option value="" disabled selected>Select Year Level</option>
+          <option value="I">I</option>
+          <option value="II">II</option>
+          <option value="III">III</option>
+          <option value="IV">IV</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="section-group">
+        <label for="section">Section</label>
+        <input type="text" id="section" name="section" placeholder="Enter Section" required aria-required="true" />
+      </div>
+
+      <div class="action-buttons">
+        <button type="submit" class="confirm-btn" id="submitBtn">Add Class</button>
+        <button type="reset" class="cancel-btn">Reset</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Modal Popup -->
+  <div id="modalOverlay" role="alertdialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc" style="display:none;">
+    <div id="modal" tabindex="-1">
+      <h2 id="modalTitle">Message</h2>
+      <p id="modalDesc"></p>
+      <button id="modalCloseBtn" aria-label="Close message"onclick="window.history.back()">OK</button>
+    </div>
+  </div>
+
+  <script>
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const userCollegeSelect = document.getElementById('user-college');
+    const courseSelect = document.getElementById('course');
+
+    const collegeToCourses = {
+      "College of Administration, Business, Hospitality and Accountancy": [
+        "Bachelor of Science in Accountancy",
+        "Bachelor of Science in Business Administration - Financial Management",
+        "Bachelor of Science in Business Administration - Marketing Management",
+        "Bachelor of Science in Business Administration - Human Resource Management",
+        "Bachelor of Public Administration",
+        "Bachelor of Science in Hospitality Management"
+      ],
+      // Other colleges...
+    };
+
+    // Function to update the course dropdown based on selected college
+    function updateCourseOptions() {
+      const selectedCollege = userCollegeSelect.value;
+      const courses = collegeToCourses[selectedCollege] || [];
+      courseSelect.innerHTML = '<option value="" disabled selected>Select Course</option>';
+
+      if (courses.length > 0) {
+        courses.forEach(course => {
+          const option = document.createElement('option');
+          option.value = course;
+          option.textContent = course;
+          courseSelect.appendChild(option);
+        });
+        courseSelect.disabled = false;  // Enable the course dropdown
+      } else {
+        courseSelect.disabled = true;  // Disable if no courses available
+      }
+    }
+
+    // Listen for college selection changes
+    userCollegeSelect.addEventListener('change', updateCourseOptions);
+
+    // Modal and form validation as before
+    function showModal(title, message) {
+      modalTitle.textContent = title;
+      modalDesc.textContent = message;
+      modalOverlay.style.display = 'flex';
+      modalCloseBtn.focus();
+    }
+
+    function hideModal() {
+      modalOverlay.style.display = 'none';
+      submitBtn.focus();
+    }
+
+    modalCloseBtn.addEventListener('click', () => {
+      hideModal();
+    });
+
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) {
+        hideModal();
+      }
+    });
+
+    const form = document.getElementById('addUserForm');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Processing...';
+
+      const elements = Array.from(form.elements).filter(el => el.hasAttribute('required'));
+      let firstInvalid = null;
+      let errors = [];
+      let allFilled = true;
+
+      elements.forEach(el => {
+        const formGroup = el.closest('.form-group');
+        if (!el.value.trim()) {
+          errors.push(`${el.previousElementSibling.textContent} is required.`);
+          if (!firstInvalid) firstInvalid = el;
+          formGroup.classList.add('invalid');
+          formGroup.classList.add('hover-red');  // Add hover and red background when empty
+          allFilled = false;
+        } else {
+          formGroup.classList.remove('invalid');
+          formGroup.classList.remove('hover-red');
+        }
+      });
+
+      if (!allFilled) {
+        if (firstInvalid) firstInvalid.focus();
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Add Class';
+        return;
+      }
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      console.log('Add Class Data:', data);
+
+      setTimeout(() => {
+        showModal('Success', 'Class added successfully!');
+        form.reset();
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Add Class';
+      }, 800);
+    });
+  </script>
+
+  <style>
+    .hover-red {
+      animation: hoverRed 0.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes hoverRed {
+      0% {
+        background-color: rgba(255, 0, 0, 0);
+        transform: translateY(0px);
+      }
+      100% {
+        background-color: initial;
+        transform: translateY(0);
+      }
+    }
+
+    .form-group.invalid input,
+    .form-group.invalid select {
+      border: 2px solid red;
+    }
+  </style>
+</body>
+
+
+</html>

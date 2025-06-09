@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, user-scalable=no">
+  <title>VUMP IT</title>
+  <style>
+    /* Base reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 1024px;
+      height: 600px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+      background-image: url('assets/background.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      position: relative;
+    }
+
+    /* Logo */
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 30px;
+      z-index: 3;
+    }
+
+    .logo img {
+      width: 190px;
+      height: auto;
+    }
+
+    /* Profile Tab */
+    .profile-tab {
+      position: absolute;
+      top: 125px;
+      left: 0;
+      background-color: white;
+      padding: 5px 50px 5px 60px;
+      border-top-right-radius: 40px;
+      border-bottom-right-radius: 40px;
+      font-size: 28px;
+      font-weight: 800;
+      color: #005b79;
+      z-index: 4;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Main Content Container */
+    .content-container {
+      position: absolute;
+      top: 210px;
+      left: 100px;
+      width: 824px;
+      height: 330px;
+      background-color: white;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: row;
+      padding: 25px 35px;
+      gap: 50px;
+      color: black;
+    }
+
+    /* Left panel for student info */
+    .left-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      width: 300px;
+      margin-top: -50px;
+    }
+
+    .section-title1 {
+      color: #00b858;
+      font-weight: 800;
+      font-size: 22px;
+      text-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+      margin-left: 60px;
+    }
+
+    .section-title2 {
+      color: #000000;
+      font-weight: 500;
+      font-size: 19px;
+      text-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+      margin-left: 95px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+
+    .left-panel p {
+      font-size: 18px;
+      font-weight: 600;
+      position: relative;
+      display: flex;
+      margin-left: 30px;
+    }
+
+    .left-panel p strong {
+      min-width: 160px;
+      display: inline-block;
+      font-weight: 700;
+      color: black;
+    }
+
+    .left-panel p span {
+      font-weight: 600;
+      color: black;
+    }
+
+    .rating {
+      font-weight: 800;
+    }
+
+    /* Graph panel for BMI chart */
+    .graph-panel {
+      flex-grow: 1;
+      position: relative;
+    }
+
+    .graph-panel canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+/* === BOTTOM-LEFT BACK BUTTON === */
+.visible-back {
+  position: absolute;
+  top: 150px;
+  left: 900px;
+  z-index: 10;
+}
+
+/* === BOTTOM-LEFT BACK BUTTON === */
+.visible-back {
+  position: absolute;
+  top: 40px;
+  left: 900px;
+  z-index: 10;
+}
+
+.back-btn {
+  background-color: #f15a29;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 28px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.back-btn:hover {
+  background-color: #256227;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Logo -->
+  <div class="logo">
+    <img src="assets/logo.png" alt="Logo" />
+  </div>
+
+  <!-- Profile Tab -->
+  <div class="profile-tab">
+    <span id="profile-tab-title">BMI STATISTICS HISTORY</span>
+  </div>
+  
+
+  <!-- Main Content -->
+  <div class="content-container">
+    <div class="left-panel">
+      <!-- Date stamp -->
+      <div class="date-stamp">
+        <span id="bmi-current-date" style="color: #00000000;">DATA</span>
+      </div>
+      <h2 class="section-title1 center-title">DATE RECORDED: </h2>
+      <h3 class="section-title2 center-title" id="latest-record-title">DATE</h3>
+      <p><strong>Height:</strong> <span id="current-height">DATA</span> cm</p>
+      <p><strong>Weight:</strong> <span id="current-weight">DATA</span> kg</p>
+      <p><strong>BMI:</strong> <span id="current-bmi">DATA</span></p>
+      <p><strong>RATING:</strong> <span class="rating" id="current-bmi-rating">DATA</span></p>
+    </div>
+
+    <div class="graph-panel">
+      <canvas id="bmiChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Back Button (Lower Left) -->
+  <div class="visible-back">
+    <button class="back-btn" onclick="window.location.href='userprofile.html'">← Back</button>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Recommendation redirect
+    document.getElementById("recommendation-btn").addEventListener("click", () => {
+      window.location.href = "bmirecommendations.html";
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const bmiData = {
+      height: "174 ",
+      weight: "68 ",
+      bmi: "22.4",
+      rating: "Normal",
+      dates: ["2025-06-01", "2025-06-02", "2025-06-03", "2025-06-04", "2025-06-07"], // Example dates, last date is 2025-06-07 (latest record)
+      ratings: [18.0, 20.5, 25.0, 23.5, 26.0], // Larger BMI value differences
+      profileTitle: "BMI STATISTICS HISTORY",
+      backLabel: "BACK",
+      currentDate: "2025-06-07", // Corrected last updated date
+      heights: ["170", "172", "174", "175", "176"], // Heights for each date
+      weights: ["65", "66", "68", "70", "72"], // Weights for each date
+    };
+
+    // Function to calculate BMI rating based on BMI value
+    function calculateRating(bmi) {
+      if (bmi < 18.5) return "Underweight";
+      else if (bmi >= 18.5 && bmi < 24.9) return "Normal";
+      else if (bmi >= 25 && bmi < 29.9) return "Overweight";
+      else return "Obesity";
+    }
+
+    // Update textual data
+    document.getElementById("current-height").textContent = bmiData.height;
+    document.getElementById("current-weight").textContent = bmiData.weight;
+    document.getElementById("current-bmi").textContent = bmiData.bmi;
+    document.getElementById("current-bmi-rating").textContent = bmiData.rating;
+    document.getElementById("profile-tab-title").textContent = bmiData.profileTitle;
+    document.getElementById("latest-record-title").textContent = ` ${bmiData.currentDate}`; // Update latest record title dynamically
+    document.getElementById("bmi-current-date").textContent = bmiData.currentDate; // Set the current date dynamically
+
+    // Dynamic Chart rendering
+    const ctx = document.getElementById('bmiChart').getContext('2d');
+    const bmiChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: bmiData.dates, // Use dates for the X-axis
+        datasets: [{
+          label: 'BMI',
+          data: bmiData.ratings,
+          borderColor: '#00c282',
+          backgroundColor: 'transparent',
+          tension: 0.4,
+          pointBackgroundColor: '#00c282',
+          pointRadius: 10, // Make the dots bigger for easy clicking
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            labels: {
+              color: 'black'
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: (context) => `BMI: ${context.parsed.y}`
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: 'black'
+            },
+            grid: {
+              display: false
+            }
+          },
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: 'black'
+            },
+            grid: {
+              color: '#ccc'
+            }
+          }
+        },
+        onClick: function(event, elements) {
+          // Handle click on a point on the graph
+          if (elements.length > 0) {
+            const index = elements[0].index; // Get the clicked index
+            const clickedDate = bmiData.dates[index]; // Get the corresponding date
+
+            // Update the placeholders based on the clicked date
+            document.getElementById("bmi-current-date").textContent = clickedDate; // Set the clicked date
+            document.getElementById("latest-record-title").textContent = clickedDate; // Change title to the clicked date
+            document.getElementById("current-height").textContent = bmiData.heights[index]; // Update height based on clicked index
+            document.getElementById("current-weight").textContent = bmiData.weights[index]; // Update weight based on clicked index
+            document.getElementById("current-bmi").textContent = bmiData.ratings[index]; // Update BMI
+            const bmiRating = calculateRating(bmiData.ratings[index]); // Calculate the BMI rating
+            document.getElementById("current-bmi-rating").textContent = bmiRating; // Update BMI rating dynamically
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

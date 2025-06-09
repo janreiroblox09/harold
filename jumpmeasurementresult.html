@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, user-scalable=no" />
+  <title>Jump Result - VUMP IT</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    html, body {
+      width: 1024px;
+      height: 600px;
+      background-image: url('assets/background.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      overflow: hidden;
+      color: white;
+      user-select: none;
+    }
+
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 30px;
+    }
+
+    .page-title {
+      position: absolute;
+      top: 50px;
+      width: 100%;
+      text-align: center;
+      font-weight: 900;
+      font-size: 38px;
+      letter-spacing: 0.05em;
+      color: white;
+      text-transform: uppercase;
+      z-index: 2;
+      margin-top: 10px;
+    }
+
+    .container {
+      position: absolute;
+      top: 140px;
+      left: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      margin-top: 10px;
+  
+    }
+
+    .input-row {
+      display: flex;
+      justify-content: center;
+      gap: 80px;
+    }
+
+    .label-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .label-column .label {
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .value-pill {
+      background: white;
+      border-radius: 30px;
+      height: 46px;
+      min-width: 140px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+    }
+
+    .value-pill .number {
+      font-weight: 700;
+      font-size: 24px;
+      color: black;
+      margin-right: 8px;
+    }
+
+    .value-pill .unit {
+      font-weight: 700;
+      font-size: 20px;
+      color: black;
+    }
+
+       .right-value-pill .unit {
+      font-weight: 700;
+      font-size: 20px;
+      color: black;
+      margin-left: 10px;
+    }
+
+    .result-box {
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 16px;
+      padding: 30px 60px;
+      display: flex;
+      flex-direction: row;
+      gap: 60px;
+      justify-content: center;
+      margin-top: 15px;
+    }
+
+    .result-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .result-item .right-label {
+      font-size: 20px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .right-value-pill {
+      background: white;
+      border-radius: 30px;
+      width: 180px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+    }
+
+    .right-value-pill .number {
+      font-weight: 800;
+      font-size: 24px;
+      color: black;
+    }
+
+    .another-trial {
+      font-size: 20px;
+      font-weight: 600;
+      margin-top: 0px;
+      margin-bottom: -30px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 40px;
+      margin-top: 10px;
+    }
+
+    button {
+      background: linear-gradient(to bottom right, #f37a53, #f15a29);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 8px 30px;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    }
+
+    button:hover {
+      background-color: #d94a18;
+    }
+  </style>
+</head>
+<body>
+  <!-- Logo -->
+  <div class="logo">
+    <img src="assets/logo.png" alt="Logo" />
+  </div>
+
+  <!-- Title -->
+  <h2 class="page-title">JUMP RESULT</h2>
+
+  <div class="container">
+    <!-- HEIGHT and WEIGHT (Standing Reach & Jump Reach) -->
+    <div class="input-row">
+      <div class="label-column">
+        <div class="label">Standing Reach Height</div>
+        <div class="value-pill">
+          <span id="current-standing-reach" class="number">DATA</span>
+          <span class="unit">cm</span>
+        </div>
+      </div>
+      <div class="label-column">
+        <div class="label">Jump Reach Height</div>
+        <div class="value-pill">
+          <span id="current-jump-reach" class="number">DATA</span>
+          <span class="unit">cm</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Jump Height and Rating -->
+    <div class="result-box">
+      <div class="result-item">
+        <div class="right-label">Jump Height</div>
+        <div class="right-value-pill">
+          <span id="current-jump-height" class="number">DATA</span>
+          <span class="unit">cm</span>
+        </div>
+      </div>
+      <div class="result-item">
+        <div class="right-label">Rating</div>
+        <div class="right-value-pill">
+          <span id="current-jump-rating" class="number">DATA</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="another-trial">Another Trial?</div>
+    <div class="buttons">
+      <button id="yes-btn">YES</button>
+      <button id="no-btn">NO</button>
+    </div>
+  </div>
+
+  <script>
+  const jumpData = {
+  standingreach: "233",  // Realistic sample standing reach (cm)
+  jumpreach: "267",      // Realistic sample jump reach (cm)
+  jumpheight: "34",      // Realistic sample jump height (cm)
+  rating: ""             // Will be set based on jumpheight
+};
+
+function updateJumpData(data) {
+  if (data.standingreach) document.getElementById('current-standing-reach').textContent = data.standingreach;
+  if (data.jumpreach) document.getElementById('current-jump-reach').textContent = data.jumpreach;
+  if (data.jumpheight) document.getElementById('current-jump-height').textContent = data.jumpheight;
+
+  // Determine the rating based on the jump height
+  const jumpHeight = parseFloat(data.jumpheight);
+  let rating = "";
+
+  if (!isNaN(jumpHeight)) {
+    if (jumpHeight >= 30 && jumpHeight <= 35) {
+      rating = "Excellent";
+    } else if (jumpHeight >= 25 && jumpHeight < 30) {
+      rating = "Good";
+    } else if (jumpHeight >= 20 && jumpHeight < 25) {
+      rating = "Average";
+    } else if (jumpHeight >= 15 && jumpHeight < 20) {
+      rating = "Below Average";
+    } else if (jumpHeight < 15) {
+      rating = "Poor";
+    } else {
+      rating = "No Rating";
+    }
+  } else {
+    rating = "No Rating";
+  }
+
+  document.getElementById('current-jump-rating').textContent = rating;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateJumpData(jumpData);
+  document.getElementById('yes-btn').addEventListener('click', () => {
+    window.location.href = 'standingreachmeasurement.html';
+  });
+
+  document.getElementById('no-btn').addEventListener('click', () => {
+    window.location.href = 'userprofile.html';
+  });
+});
+    document.addEventListener("DOMContentLoaded", () => {
+      updateJumpData(jumpData);  // Initialize the jump data
+
+      // Button actions for retrying or returning to the user profile page
+      document.getElementById('yes-btn').addEventListener('click', () => {
+        window.location.href = 'standingreachmeasurement.html';
+      });
+
+      document.getElementById('no-btn').addEventListener('click', () => {
+        window.location.href = 'userprofile.html';
+      });
+    });
+  </script>
+</body>
+</html>

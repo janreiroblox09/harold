@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, user-scalable=no" />
+  <title>VUMP IT</title>
+  <style>
+    /* === RESET & BASE === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 1024px;
+      height: 600px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+      position: relative;
+      background-image: url('assets/background.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+    }
+
+    /* === Logo === */
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 30px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 3;
+    }
+
+    .logo img {
+      width: 191px;
+      height: 91px;
+    }
+
+    /* === Profile Tab === */
+    .profile-tab {
+      position: absolute;
+      top: 125px;
+      left: 0;
+      background-color: white;
+      padding: 5px 50px 5px 60px;
+      border-top-right-radius: 40px;
+      border-bottom-right-radius: 40px;
+      font-size: 28px;
+      font-weight: 800;
+      color: #005b79;
+      z-index: 4;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* === Main Content Wrapper === */
+    .content-wrapper {
+      position: absolute;
+      top: 190px;
+      left: 30px;
+      right: -20px;
+      bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* === Left Text Side === */
+    .left-text {
+      width: 50%;
+      max-width: 500px;
+      margin-left: 30px;
+      margin-top: -20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 100%;
+    }
+
+    .left-text h1 {
+      font-weight: 900;
+      font-size: 32px;
+      line-height: 58px;
+      letter-spacing: 0.05em;
+      color: white;
+      margin-bottom: 40px;
+      text-transform: uppercase;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    /* === Right Image Frame === */
+    .right-image-frame {
+      width: 350px;
+      height: 500px;
+      border: 4px solid rgba(255, 255, 255, 0);
+      border-radius: 15px;
+      padding: 15px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: transparent;
+      margin-top: -100px;
+      margin-right: 70px;
+    }
+
+    .right-image-frame img {
+      max-height: 200%;
+      max-width: 300%;
+      object-fit: contain;
+      user-select: none;
+      pointer-events: none;
+      border: 2px solid rgb(255, 255, 255);
+      border-radius: 15px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* === Continue Button === */
+    .continue-btn {
+      align-self: center;
+      position: absolute;
+      bottom: 60px;
+      left: 220px;
+      background-color: #ec6c0b;
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 20px;
+      padding: 10px 30px;
+      border-radius: 15px;
+      border: 3px solid rgb(219, 80, 15);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 3px 6px rgba(0, 59, 22, 0.5);
+      user-select: none;
+    }
+
+    .continue-btn:hover {
+      background-color: #d64309;
+    }
+  </style>
+</head>
+<body>
+  <!-- Logo -->
+  <div class="logo">
+    <img src="assets/logo.png" alt="Logo" />
+  </div>
+
+  <!-- Profile Tab -->
+  <div class="profile-tab">
+    <span>HEIGHT MEASUREMENT</span>
+  </div>
+
+  <!-- Main Content Wrapper -->
+  <div class="content-wrapper">
+    <div class="left-text">
+      <h1>PLACE YOUR HAND WEARING THE DEVICE ON YOUR HEAD AND HOLD STILL FOR 3 SECONDS AFTER CLICKING "CONTINUE"</h1>
+      <p class="preparing-text" style="visibility: hidden;">
+        Preparing next action<span id="dots">...</span>
+      </p>
+    </div>
+    <div class="right-image-frame">
+      <img src="assets/heightmeasurement.png" alt="Height Platform Silhouette" />
+    </div>
+  </div>
+
+  <!-- Continue Button -->
+  <a href="measuringheight.html" class="continue-btn" id="continue-btn-label">CONTINUE</a>
+</body>
+</html>

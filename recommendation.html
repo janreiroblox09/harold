@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, user-scalable=no" />
+  <title>VUMP IT</title>
+  <style>
+    /* Base reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 1024px;
+      height: 600px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+      position: relative;
+      background-image: url('assets/background.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+    }
+
+    /* Logo */
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 30px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 3;
+    }
+
+    .logo img {
+      width: 191px;
+      height: 91px;
+    }
+
+    /* Profile Tab */
+    .profile-tab {
+      position: absolute;
+      top: 125px;
+      left: 0;
+      background-color: white;
+      padding: 5px 50px 5px 60px;
+      border-top-right-radius: 40px;
+      border-bottom-right-radius: 40px;
+      font-size: 28px;
+      font-weight: 800;
+      color: #005b79;
+      z-index: 4;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Recommendation Box */
+    .recommendation-box h3 {
+      margin-top: 20px;
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    .recommendation-box ul {
+      margin-left: 20px;
+      list-style-type: disc;
+    }
+
+    /* Back Button */
+    .back-button {
+      position: absolute;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(to bottom right, #f37a53, #f15a29);
+      color: white;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      font-weight: bold;
+      font-size: 20px;
+      padding: 10px 37px;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      z-index: 4;
+    }
+
+    .back-button:hover {
+      background-color: #e04a1f;
+    }
+
+    /* Recommendation Box */
+    .recommendation-box {
+      position: absolute;
+      top: 190px;
+      left: 25px;
+      width: 980px;
+      height: 320px;
+      background-color: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(6px);
+      border-radius: 0;
+      padding: 20px;
+      overflow-y: auto;
+      font-size: 16px;
+      line-height: 1.5;
+      color: white;
+      z-index: 3;
+      scrollbar-gutter: stable both-edges;
+    }
+
+    /* Custom scrollbar inside the box border */
+    .recommendation-box::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .recommendation-box::-webkit-scrollbar-track {
+      background: transparent;
+      border-radius: 0;
+    }
+
+    .recommendation-box::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 0;
+    }
+
+    .recommendation-box::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Logo -->
+  <div class="logo">
+    <img src="assets/logo.png" alt="Logo" />
+  </div>
+
+  <!-- Profile Tab -->
+  <div class="profile-tab">
+    <span id="profileTabTitle">RECOMMENDATIONS</span>
+  </div>
+
+  <!-- Recommendation Content -->
+  <div class="recommendation-box">
+    <div class="recommendation-content">
+      <h3><span>Training Focus</span></h3>
+      <ul>
+        <li><span id="trainingItem">DATA</span></li>
+      </ul>
+
+      <h3><span>Plyometric Development</span></h3>
+      <ul>
+        <li><span id="plyometricItem">DATA</span></li>
+      </ul>
+
+      <h3><span>Recovery and Monitoring</span></h3>
+      <ul>
+        <li><span id="recoveryItem">DATA</span></li>
+      </ul>
+
+      <h3><span>VUMPIT's Remarks</span></h3>
+      <ul>
+        <li><span id="remarksText">DATA</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <a href="jumpheightstatisticshistory.html" class="back-button">BACK</a>
+
+  <!-- Optional Dynamic JS Example -->
+  <script>
+    const recommendationData = {
+      trainingItem: "Focus on barbell squats, lunges, and deadlifts.",
+      plyometricItem: "Perform depth jumps and lateral hurdle hops.",
+      recoveryItem: "Maintain 7–9 hours of sleep and proper hydration.",
+      remarksText: "Athlete is progressing well. Continue using the system to monitor improvement.",
+    };
+
+    for (const key in recommendationData) {
+      const element = document.getElementById(key);
+      if (element) {
+        element.textContent = recommendationData[key];
+      }
+    }
+  </script>
+
+</body>
+</html>

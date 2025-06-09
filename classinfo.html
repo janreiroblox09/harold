@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, user-scalable=no" />
+  <title>Class Information - VUMP IT</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    /* === RESET & BASE === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 1024px;
+      height: 600px;
+      font-family: 'Poppins', sans-serif;
+      color: #222;
+      background-image: url('BACKGROUND.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      overflow: hidden;
+    }
+
+    /* === HEADER === */
+    .header {
+      height: 110px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 25px;
+      position: relative;
+    }
+
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 30px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 3;
+    }
+
+    .logo img {
+      width: 191px;
+      height: 91px;
+    }
+
+    /* === OVERLAY CONTAINER === */
+    .overlay {
+      padding: 120px 40px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 20px;
+      padding-bottom: 0px;
+      padding-right: 30px;
+      max-height: 70%;
+    }
+
+    /* === TEXT BLOCK === */
+    .text-block h1 {
+      font-size: 40px;
+      color: white;
+      font-weight: 900;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+      margin-top: -20px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #f0f0f0;
+      font-weight: 600;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+    }
+
+    /* Table container */
+    .table-box {
+      margin: 0 20px;
+      background-color: white;
+      border-radius: 12px;
+      max-height: 280px;
+      overflow-y: auto;
+      overflow-x: auto;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+      margin-top: -10px;
+    }
+
+    /* Table styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      color: #444;
+      user-select: none;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      letter-spacing: 0.3px;
+      position: sticky;
+      top: 0;
+      background-color: #fafafa;
+      font-weight: 900;
+      color: #555;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.2s ease;
+    }
+
+    th:hover {
+      background-color: #f3f3f3;
+    }
+
+    tr:nth-child(even) {
+      background-color: #fcfcfc;
+    }
+
+    tr:hover {
+      background-color: #fff3e6;
+    }
+
+     /* === ADD AND EDIT BUTTONS === */
+    .action-buttons {
+      position: absolute;
+      top: -40px; /* Position above the table box */
+      right: 20px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .action-buttons img {
+      cursor: pointer;
+      width: 40px; /* Set size for the icons */
+      height: 40px;
+      border-radius: 8px;
+      transition: transform 0.2s ease;
+      margin-top: 240px;
+      margin-left: -35px;
+      margin-right: 30px;
+    }
+
+    .action-buttons img:hover {
+      transform: scale(1.1); /* Slight scale effect on hover */
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      color: #444;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      letter-spacing: 0.3px;
+      position: sticky;
+      top: 0;
+      background-color: #fafafa;
+      font-weight: 700;
+      color: #555;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.2s ease;
+    }
+
+    th:hover {
+      background-color: #f3f3f3;
+    }
+
+    tr:nth-child(even) {
+      background-color: #fcfcfc;
+    }
+
+    tr:hover {
+      background-color: #fff3e6;
+    }
+
+    .view-btn {
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .view-btn:hover {
+      background-color: #256227;
+    }
+    
+    /* === BOTTOM-LEFT BACK BUTTON === */
+    .visible-back {
+      position: absolute;
+      top: 40px;
+      left: 900px;
+      z-index: 10;
+    }
+
+    .back-btn {
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 28px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .back-btn:hover {
+      background-color: #256227;
+    }
+
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      width: 80%;
+      max-width: 400px;
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-content p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .modal-content button {
+      margin: 10px;
+      padding: 12px 25px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 6px;
+    }
+
+    .modal-content button:hover {
+      background-color: #256227;
+    }
+
+    /* Success Modal (Bottom Center) */
+    .success-modal {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #28a745; /* Green background */
+      color: white;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-size: 16px;
+      display: none;
+      z-index: 1001;
+    }
+
+    .confirm-cancel-buttons {
+      display: none;
+      text-align: center;
+      margin-top: 400px;
+      margin-left: 350px;
+      position: absolute;
+    }
+
+    .confirm-cancel-buttons button {
+      margin-top: 15px;
+      margin-right: 20px;
+      padding: 6px 25px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      background-color: #ffffff;
+      color: #2e7d32;
+      border: none;
+      border-radius: 6px;
+    }
+
+    /* Search and Refresh container */
+    .search-refresh-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 15px;
+    }
+
+    /* Search bar */
+    .search-bar-custom {
+      position: relative;
+      width: 520px;
+      background: url('elements/elements/INTERFACE 0 - GENERAL ELEMENTS/SEARCH BAR.png') no-repeat center center;
+      background-size: cover;
+      border-radius: 40px;
+      height: 35px;
+      display: flex;
+      align-items: center;
+      padding-left: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .search-bar-custom input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 16px;
+      color: white;
+      outline: none;
+      padding-right: 56px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-shadow: 0 0 2px rgba(0,0,0,0.3);
+    }
+
+    .search-bar-custom input::placeholder {
+      color: white;
+      opacity: 0.85;
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 18px;
+      height: 28px;
+      width: 28px;
+      cursor: pointer;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+      transition: transform 0.2s ease;
+    }
+
+    .search-icon:hover {
+      transform: scale(1.1);
+    }
+
+    /* === COUNTER === */
+#data-count {
+  font-weight: bold;
+  margin-top: 10px;
+  color: #ffffff00; /* White text */
+  font-size: 16px;
+  position: absolute;
+}
+
+#data-count p {
+  margin: 0;
+}
+
+#data-count span {
+  color: #ff6a0000; /* A color for the counter value */
+  font-size: 18px;
+  font-weight: 700;
+}
+
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">
+      <img src="assets/logo.png" alt="Logo" />
+    </div>
+    <div class="menu-icon">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+  <!-- Back Button (Lower Left) -->
+  <div class="visible-back">
+    <button class="back-btn" onclick="window.location.href='viewclass.html'">← Back</button>
+  </div>
+
+  <!-- Action Buttons (Add and Edit) -->
+  <div class="action-buttons">
+    <img src="elements/ADD USER BT.png" alt="Add Student" onclick="window.location.href='add-student.html'" />
+    <img src="elements/DELETE USER BT.png" alt="Edit Class" onclick="enableEditMode()" />
+  </div>
+
+  <!-- Main Content -->
+  <div class="overlay">
+    <div class="text-block">
+      <h1><span id="class-name">DATA</span></h1>
+      <p class="subtitle">Students for the selected class</p>
+    </div>
+
+    <!-- Counter for number of rows -->
+    <div id="data-count" style="font-weight: bold; margin-top: 10px;">
+      <p>Total Students: <span id="total-students">0</span></p>
+    </div>
+
+    <div class="search-refresh-wrapper">
+      <div class="search-bar-custom">
+        <input type="text" id="searchInput" placeholder="Enter user ID, name, gender, user type, etc." />
+        <img src="elements/elements/INTERFACE 0 - GENERAL ELEMENTS/SEARCH ICON.png" alt="Search" class="search-icon" />
+      </div>
+    </div>
+
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="select-all" style="display:none;" onclick="toggleSelectAll()"></th>
+            <th id="user-id">USER ID</th>
+            <th id="user-name">STUDENT NAME</th>
+            <th id="user-type">USER TYPE</th>
+            <th id="gender">GENDER</th> <!-- Added Gender column -->
+            <th>ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody id="student-table-body">
+          <!-- Rows will be dynamically inserted here -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Confirm and Cancel Buttons (Initially Hidden) -->
+    <div id="confirm-cancel-buttons" class="confirm-cancel-buttons" style="display: none;">
+      <button onclick="showModal()">Confirm</button>
+      <button onclick="cancelEdit()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="delete-modal" class="modal">
+    <div class="modal-content">
+      <p>Are you sure you want to delete the selected item(s)?</p>
+      <button id="confirm-delete" onclick="deleteSelected()" style="background-color: rgb(255, 93, 34); font-size: 18px; font-weight: bold;">Yes</button>
+      <button id="cancel-delete" onclick="closeModal()" style="background-color: rgb(255, 93, 34); font-size: 18px; font-weight: bold;">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Success Modal for Delete Confirmation -->
+  <div id="success-modal" class="success-modal">Deleted successfully.</div>
+
+  <script>
+    // Dynamically update the student information
+    function updateStudentData() {
+      const studentData = [
+        { id: 1, studentId: '12345', name: 'John Doe', userType: 'Student', gender: 'Male' },
+        { id: 2, studentId: '67890', name: 'Jane Smith', userType: 'Student', gender: 'Female' },
+        { id: 3, studentId: '11223', name: 'Alice Johnson', userType: 'Student', gender: 'Female' },
+        { id: 4, studentId: '44556', name: 'Bob Brown', userType: 'Student', gender: 'Male' },
+        { id: 5, studentId: '77889', name: 'Chris Lee', userType: 'Student', gender: 'Male' },
+        { id: 6, studentId: '99887', name: 'Eve Adams', userType: 'Student', gender: 'Female' },
+      ];
+
+      const tbody = document.getElementById('student-table-body');
+      tbody.innerHTML = '';  // Clear previous rows
+
+      studentData.forEach(student => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><input type="checkbox" class="student-checkbox" data-id="${student.id}" style="display:none;"></td>
+          <td><span id="user-id-${student.id}">${student.studentId}</span></td>
+          <td><span id="user-name-${student.id}">${student.name}</span></td>
+          <td><span id="user-type-${student.id}">${student.userType}</span></td>
+          <td><span id="gender-${student.id}">${student.gender}</span></td>
+          <td><button class="view-btn" onclick="window.location.href='studentprofile.html'">View</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      // Update the counter with the number of rows in the table
+      const countIndicator = document.getElementById('count-indicator');
+      countIndicator.textContent = studentData.length;
+    }
+
+    // Enable Edit Mode (Checkboxes and action buttons)
+    function enableEditMode() {
+      const checkboxes = document.querySelectorAll('.student-checkbox');
+      checkboxes.forEach(checkbox => {
+        checkbox.style.display = 'inline'; // Show checkboxes
+      });
+
+      // Show the "Select All" checkbox
+      document.getElementById('select-all').style.display = 'inline';
+
+      // Show Confirm/Cancel buttons
+      document.getElementById('confirm-cancel-buttons').style.display = 'block';
+
+      // Change the action buttons to Confirm/Cancel
+      const actionButtons = document.querySelector('.action-buttons');
+      actionButtons.innerHTML = `
+        <button onclick="showModal()">Confirm</button>
+        <button onclick="cancelEdit()">Cancel</button>
+      `;
+    }
+
+    // Toggle Select All Checkboxes
+    function toggleSelectAll() {
+      const selectAllCheckbox = document.getElementById('select-all');
+      const checkboxes = document.querySelectorAll('.student-checkbox');
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = selectAllCheckbox.checked;
+      });
+    }
+
+    // Show Modal for Delete Confirmation
+    function showModal() {
+      const selectedIds = [];
+      const checkboxes = document.querySelectorAll('.student-checkbox:checked');
+      checkboxes.forEach(checkbox => {
+        selectedIds.push(checkbox.dataset.id);
+      });
+
+      if (selectedIds.length > 0) {
+        document.getElementById('delete-modal').style.display = 'flex';
+      }
+    }
+
+    // Close the Modal
+    function closeModal() {
+      document.getElementById('delete-modal').style.display = 'none';
+    }
+
+    // Delete Selected Students
+    function deleteSelected() {
+      const selectedIds = [];
+      const checkboxes = document.querySelectorAll('.student-checkbox:checked');
+      checkboxes.forEach(checkbox => {
+        selectedIds.push(checkbox.dataset.id);
+      });
+
+      // Logic to delete selected students (you can integrate an API or modify the data here)
+      console.log('Deleted Students IDs:', selectedIds);
+
+      // Show success modal
+      const successModal = document.getElementById('success-modal');
+      successModal.style.display = 'block';
+
+      // Hide the modal after 3 seconds
+      setTimeout(() => {
+        successModal.style.display = 'none';
+
+        // Redirect to classinfo.html after deletion
+        window.location.href = 'classinfo.html'; // Redirect after deletion
+      }, 3000);
+
+      // Close the modal and refresh the table
+      closeModal();
+      updateStudentData();
+    }
+
+    // Cancel Edit Mode
+    function cancelEdit() {
+      const checkboxes = document.querySelectorAll('.student-checkbox');
+      checkboxes.forEach(checkbox => {
+        checkbox.style.display = 'none'; // Hide checkboxes
+      });
+
+      // Hide the "Select All" checkbox
+      document.getElementById('select-all').style.display = 'none';
+
+      // Reset action buttons
+      const actionButtons = document.querySelector('.action-buttons');
+      actionButtons.innerHTML = `
+        <img src="elements/ADD USER BT.png" alt="Add Student" onclick="window.location.href='add-student.html'" />
+        <img src="elements/DELETE USER BT.png" alt="Edit Class" onclick="window.location.href='classinfo.html'" />
+      `;
+
+      // Hide Confirm/Cancel buttons
+      document.getElementById('confirm-cancel-buttons').style.display = 'none';
+    }
+
+    // Initial Data Load
+    updateStudentData();
+
+  </script>
+
+  <script>
+    // Select search input and table body elements
+    const searchInput = document.getElementById('searchInput');
+    const tbody = document.getElementById('student-table-body'); // Corrected to match the actual ID
+
+    // Search functionality for filtering the table
+    searchInput.addEventListener('input', () => {
+      const term = searchInput.value.toLowerCase(); // Get the search term
+      const rows = Array.from(tbody.querySelectorAll('tr')); // Get all rows in the table body
+      
+      rows.forEach(row => {
+        const cells = Array.from(row.querySelectorAll('td')); // Get all cells in the row
+        const match = cells.some(td => td.innerText.toLowerCase().includes(term)); // Check if any cell matches the search term
+        row.style.display = match ? '' : 'none'; // Show or hide the row based on the match
+      });
+    });
+
+    // Refresh function to reset the table and search input
+    function refreshTable() {
+      searchInput.value = ''; // Clear the search input
+      const tableBox = document.querySelector('.table-box');
+      
+      if (tableBox) tableBox.scrollTop = 0; // Reset the table scroll position
+      
+      // Show all rows in the table
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      rows.forEach(row => row.style.display = '');
+      
+      if (tbody) tbody.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Smoothly scroll to the top of the table
+    }
+
+    // Sample data to be used
+    const sampleClassData = "Computer Science 101";
+
+    // Assign the sample data to the span with id "class-name"
+    document.getElementById("class-name").textContent = sampleClassData;
+  </script>
+
+</body>
+
+
+</html>

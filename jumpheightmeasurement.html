@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, user-scalable=no" />
+  <title>VUMP IT</title>
+  <style>
+    /* Base reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 1024px;
+      height: 600px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+      position: relative;
+      background-image: url('assets/background.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+    }
+
+    /* Logo */
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 30px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 3;
+    }
+
+    .logo img {
+      width: 191px;
+      height: 91px;
+    }
+
+    /* Main Content Wrapper */
+    .content-wrapper {
+      position: absolute;
+      top: 190px;
+      left: 30px;
+      right: -20px;
+      bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Left text side */
+    .left-text {
+      width: 50%;
+      max-width: 500px;
+      margin-left: 30px;
+      margin-top: -20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 100%;
+    }
+
+    .left-text h1 {
+      font-weight: 900;
+      font-size: 35px;
+      line-height: 58px;
+      letter-spacing: 0.05em;
+      color: white;
+      margin-bottom: 40px;
+      text-transform: uppercase;
+    }
+
+    /* Right image frame */
+    .right-image-frame {
+      width: 350px;
+      height: 500px;
+      border: 4px solid rgba(255, 255, 255, 0);
+      border-radius: 15px;
+      padding: 15px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: transparent;
+      margin-top: -100px;
+      margin-right: 70px;
+    }
+
+    .right-image-frame img {
+      max-height: 200%;
+      max-width: 300%;
+      object-fit: contain;
+      user-select: none;
+      pointer-events: none;
+      border: 2px solid rgb(255, 255, 255);
+      border-radius: 15px;
+      box-sizing: border-box;
+    }
+
+    /* Preparing Text Animation */
+    .loading-indicator {
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 0.05em;
+      color: white;
+      margin-top: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: none;
+    }
+
+
+  </style>
+</head>
+<body>
+
+  <!-- Logo -->
+  <div class="logo">
+    <img src="assets/logo.png" alt="Logo" />
+  </div>
+
+  <!-- Main Content Wrapper -->
+  <div class="content-wrapper">
+    <div class="left-text">
+      <h1 id="main-text">GET READY TO JUMP</h1>
+      <div id="preparing-text" class="loading-indicator">Preparing next action<span id="prepare-dots">...</span></div>
+    </div>
+    <div class="right-image-frame">
+      <img id="main-image" src="assets/preparetojump.png" alt="Height Platform Silhouette" />
+    </div>
+  </div>
+
+ 
+
+  <script>
+    // Dot animation helper function
+    function animateDots(elementId, interval = 500) {
+      const el = document.getElementById(elementId);
+      let count = 0;
+      return setInterval(() => {
+        count = (count + 1) % 4; // cycles 0 to 3
+        el.textContent = '.'.repeat(count);
+      }, interval);
+    }
+
+    // Animate the "Preparing next action..." dots
+    let prepareDotsInterval = animateDots('prepare-dots', 500);
+
+    // Step 1: After 5 seconds, update text to "READY..." and change image
+    setTimeout(() => {
+      // Stop preparing dots animation
+      clearInterval(prepareDotsInterval);
+    
+      // Change main text to "READY" with dots as loading indicator
+      const mainText = document.getElementById('main-text');
+      mainText.textContent = 'READY';
+    
+      // Add loading dots for READY text
+      const readyDotsId = 'ready-dots';
+      const readyDotsSpan = document.createElement('span');
+      readyDotsSpan.id = readyDotsId;
+      readyDotsSpan.textContent = '';
+      mainText.appendChild(readyDotsSpan);
+    
+      // Animate READY dots
+      const readyDotsInterval = animateDots(readyDotsId, 500);
+    
+      // Change the image to readytojump.png
+      document.getElementById('main-image').src = 'assets/readytojump.png';
+    
+      // Hide the "Preparing next action..." text
+      document.getElementById('preparing-text').style.display = 'none';
+
+      // Step 2: After another 5 seconds, update to "JUMP!" and change image
+      setTimeout(() => {
+        clearInterval(readyDotsInterval);
+
+        // Update main text to "JUMP!"
+        mainText.textContent = 'JUMP!';
+
+        // Change image to jumping.png
+        document.getElementById('main-image').src = 'assets/jumping.png';
+
+        // Step 3: After 3 seconds, redirect to next interface
+        setTimeout(() => {
+          window.location.href = 'jumpmeasurementresult.html';
+        }, 3000);
+      }, 5000);
+
+    }, 5000);
+  </script>
+
+</body>
+</html>
